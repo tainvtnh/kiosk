@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: "tnh-kios-api"
+
+  datasource:
+    url: jdbc:sqlserver://10.73.52.222;instanceName=VNPTTNHHIS2;databaseName=HOS_BVDKTN_2014;encrypt=true;trustServerCertificate=true
+    username: yte_bvdk
+    password: Yte@1123
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+jpa:
+    hibernate:
+      ddl-auto: update   # hoặc validate nếu schema đã có sẵn
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+
+app:
+  jwt-secret: change-this-to-a-very-secret-key-of-adequate-length
+  jwt-expiration-ms: 1800000
+  jwt-refresh-expiration-ms: 3600000
+  auth:
+    username: admin
+    password: 123456
+    hospital-id: HOSP001
+    full-name: Quản trị viên hệ thống
+
+messages:
+    basename: "i18n/messages"
+    encoding: UTF-8
+    cache-duration: 3600 # seconds
+    fallback-to-system-locale: false
+
+system:
+  api-prefix: "/api/v1"
+
+server:
+  address: localhost
+  port: 8889
+
+logging:
+  pattern:
+    file: "%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
+  level:
+    root: INFO
+    com.tnh.kiosk: INFO
+    org.springframework: INFO
+    org.springframework.jdbc: DEBUG
+    org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer: ERROR
+  file:
+    name: "${logging.file.path}/kiosk_ytgd.log"
+    path: logs

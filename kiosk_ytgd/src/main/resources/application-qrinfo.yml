@@ -1,0 +1,23 @@
+qrinfo:
+  default-config:
+    payLoad: "01"
+    pointOIMethod: "12"
+    masterMerchant: "970488"
+    ccy: "704"
+    countryCode: "VN"
+  merchant:
+    code: "1295195294812"
+    name: "VNPAY"
+    cc: "1234"
+  address:
+    city: "HANOI"
+    pinCode: "100000"
+  additional:
+    billNumber: "3998"
+    terminalID: "0001"
+    storeID: "SONVC"
+    purpose: "TOPUP"
+  payment:
+    apiUrl: "https://api.qrpay.vn/v2/qr/payment"
+    secretKey: "S3cr3tK3yF0rQRP4ym3nt"
+    description: "Nap tien dien tu"

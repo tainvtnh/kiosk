@@ -1,0 +1,76 @@
+kiosk:
+  queries:
+    getAllUsers:
+      sql: "SELECT * FROM users WHERE status = :status"
+
+  stored-procedures:
+    # A003 - Lấy danh số thứ tự
+    generator:
+      name: "KIOS_LAYSTTDKKHAM"
+      inParams:
+        - "tenNb"
+        - "ngaySinh"
+        - "uuTien"
+        - "dichVuId"
+        - "phongId"
+        - "doiTuong"
+        - "khuVucId"
+        - "maTheBhyt"
+        - "tinhThanhPhoId"
+        - "quanHuyenId"
+        - "xaPhuongId"
+        - "tuNgayTheBhyt"
+        - "denNgayTheBhyt"
+        - "maNoiDKBD"
+        - "diaChiTheBhyt"
+        - "soDienThoai"
+        - "gioiTinh"
+        - "nbDichVu"
+        - "maNb"
+        - "diaChi"
+        - "soCanCuoc"
+        - "lyDoVaoVien"
+        - "ngheNghiepId"
+        - "danTocId"
+        - "ngayBhytNamNam"
+        - "ngayCapCccd"
+        - "noiCapCccd"
+        - "KhuVucSongBhyt"
+        - "loaiDungTuyen"
+        - "tenICDChanDoanTuyenDuoi"
+        - "noiChuyen"
+        - "soChuyenTuyen"
+        - "ngayChuyenTuyen"
+        - "hinhThucChuyenTuyen"
+        - "lyDoChuyenTuyen"
+    # A004 - Lấy danh sách dịch vụ khám
+    service-catalog:
+      name: "KIOS_LAYDANHSACHDICHVUKHAM"
+      inParams:
+        - "chuyenKhoaId"
+        - "khuVucId"
+        - "doiTuongBnId"
+    # A005 - Lấy danh sách phòng khám
+    waiting-room:
+      name: "KIOS_LAYDANHSACHPHONGKHAM"
+      inParams:
+        - "chuyenKhoaId"
+        - "khuVucId"
+        - "doiTuongBnId"
+    # A006 - Lấy danh sách khu vực
+    area-catalog:
+      name: "KIOS_LAYDANHSACHKHUVUC"
+    # A009 - Lấy danh sách tỉnh thành phố
+    get-province:
+      name: "KIOS_LAYDANHSACHTINHTHANHPHO"
+    # A011 - Lấy danh sách phường xã
+    get-commune:
+      name: "KIOS_LAYDANHSACHPHUONGXA"
+      inParams:
+        - "MA_TINH_THANH"
+    # A014 - Lấy danh sách dân tộc
+    ethnic:
+      name: "KIOS_LAYDANHSACHDANTOC"
+    # A015 - Lấy danh sách nghề nghiệp
+    career:
+      name: "KIOS_LAYDANHSACHNGHENGHIEP"

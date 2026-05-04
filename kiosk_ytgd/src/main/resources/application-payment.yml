@@ -1,0 +1,17 @@
+# Cấu hình Bảo mật và Xác thực (Security/Authentication)
+ncc:
+  api:
+    base-url: https://paygate.bidv.com.vn:9443/bidvpaygate/api/v1.0    
+    secret-key: your_secret_key_ncc_123456 # KHÔNG ĐƯỢC ĐẶT LÀ SECRET MẶC ĐỊNH TRONG THỰC TẾ
+    headers:
+      content-type: application/json
+    dvtt: your_dvtt_code_ncc_123456       # Mã đơn vị thanh toán do BIDV cấp
+    unit-code: your_unit_code_ncc_123456   # Mã CSYT do bộ y tế cấp
+  credentials:
+    partner-code: your_partner_code_ncc_123456 # Mã đối tác được BIDV cấp
+    service-id: your_service_id_ncc_123456     # Mã dịch vụ được BIDV cấp 
+  security:
+    secret-code: your_secret_key_ncc_123456 # KHÔNG ĐƯỢC ĐẶT LÀ SECRET MẶC ĐỊNH TRONG THỰC TẾ
+    allowed-ips:
+      - 203.113.136.x/xx
+      - 203.113.137.x/xx

@@ -1,0 +1,424 @@
+{
+	"info": {
+		"_postman_id": "60b1db57-a0cc-49c1-b75a-c8f5c34bf1e6",
+		"name": "apikios.ytetayninh.vn",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47698186"
+	},
+	"item": [
+		{
+			"name": "A015 - Lay danh sach nghe nghiep",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2MTI5NzE1OSwiZXhwIjoxNzYxMjk4OTU5fQ.BZBPGmvBv7cGOIS_-BwQ-DFWt6zkMejQJwrGZN3H4KQQKRT45RncLtjmC0x8jI-o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://apikios.ytetayninh.vn/api/v1/his/career?page=0&size=10",
+					"protocol": "https",
+					"host": [
+						"apikios",
+						"ytetayninh",
+						"vn"
+					],
+					"path": [
+						"api",
+						"v1",
+						"his",
+						"career"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "A001 - Login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-API-KEY",
+						"value": " X1Z9cs9BDB0EO6C28YI+LLUZT2QUewQv/TpfXGqtxtp6xl6S6WHv9ZV4ARWdPV2W9X5vp0ZeJHtO9fW3AcgUHg==",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"123456\",\r\n  \"HOSPITALID\": \"HOSP001\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apikios.ytetayninh.vn/api/v1/authen/login",
+					"protocol": "https",
+					"host": [
+						"apikios",
+						"ytetayninh",
+						"vn"
+					],
+					"path": [
+						"api",
+						"v1",
+						"authen",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "A003 - Lay so TT kham",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2MTI5NzAyNiwiZXhwIjoxNzYxMjk4ODI2fQ.SffK1MJK1F3d_B77LJ55sA7DunclH771ZBPiPH7TDzkKLotD1j-2D-fhXKszxIza",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"tenNb\": \"N'NGUYỄN THỊ A'\",\r\n  \"ngaySinh\": \"1990-01-01\",\r\n  \"uuTien\": 0,\r\n  \"dichVuId\": 102297601,\r\n  \"phongId\": 135,\r\n  \"doiTuong\": 2,\r\n  \"khuVucId\": 1000000,\r\n  \"maTheBhyt\": \"HT2010128302180\",\r\n  \"tinhThanhPhoId\": \"1000245\",\r\n  \"quanHuyenId\": \"1000775\",\r\n  \"xaPhuongId\": \"1008831\",\r\n  \"tuNgayTheBhyt\": \"2021-01-01\",\r\n  \"denNgayTheBhyt\": \"2025-12-31\",\r\n  \"maNoiDKBD\": \"01003\",\r\n  \"diaChiTheBhyt\": \"N'Phường Phúc Xá, Quận Ba Đình, Thành phố Hà Nội'\",\r\n  \"soDienThoai\": \"0986345342\",\r\n  \"gioiTinh\": 1,\r\n  \"nbDichVu\": 0,\r\n  \"maNb\": \"2307000280\",\r\n  \"diaChi\": \"N'Cụm 7, Duyên Thái, Thường Tín, Hà Nội'\",\r\n  \"soCanCuoc\": \"001095039679\",\r\n  \"lyDoVaoVien\": \"Bị ho, sốt\",\r\n  \"ngheNghiepId\": \"884\",\r\n  \"danTocId\": \"01\",\r\n  \"ngayBhytNamNam\": \"05/05/2024\",\r\n  \"KhuVucSongBhyt\": \"1\",\r\n  \"loaiDungTuyen\": \"1\",\r\n  \"tenICDChanDoanTuyenDuoi\": \"N'A00.0-Bệnh tả do Vibrio cholerae 01, typ sinh học cholerae;A00.1-Bệnh tả do Vibrio cholerae 01, typ sinh học eltor;A01.1-Bệnh phó thương hàn A'\",\r\n  \"noiChuyen\": \"01008\",\r\n  \"soChuyenTuyen\": \"01/GCN/2024\",\r\n  \"ngayChuyenTuyen\": \"01/01/2024\",\r\n  \"hinhThucChuyenTuyen\": \"1\",\r\n  \"lyDoChuyenTuyen\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apikios.ytetayninh.vn/api/v1/his/generator",
+					"protocol": "https",
+					"host": [
+						"apikios",
+						"ytetayninh",
+						"vn"
+					],
+					"path": [
+						"api",
+						"v1",
+						"his",
+						"generator"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "A004 - Lay DS dich vu",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2MTI5NjcyMCwiZXhwIjoxNzYxMjk4NTIwfQ.01CPYNtkESLlVvZXe_4Vq4zO-BOoTv-vRZb0aXpo0nULSoT5S_thvOL-KIpusoVT",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Tenant",
+						"value": "admin.org",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://apikios.ytetayninh.vn/api/v1/his/service-catalog?page=0&size=10&chuyenKHOAID=0&khuVucId=0&doiTuongBnId=0",
+					"protocol": "https",
+					"host": [
+						"apikios",
+						"ytetayninh",
+						"vn"
+					],
+					"path": [
+						"api",
+						"v1",
+						"his",
+						"service-catalog"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "chuyenKHOAID",
+							"value": "0"
+						},
+						{
+							"key": "khuVucId",
+							"value": "0"
+						},
+						{
+							"key": "doiTuongBnId",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "A005 - Lay DS phong kham",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2MTI5NzE1OSwiZXhwIjoxNzYxMjk4OTU5fQ.BZBPGmvBv7cGOIS_-BwQ-DFWt6zkMejQJwrGZN3H4KQQKRT45RncLtjmC0x8jI-o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Tenant",
+						"value": "admin.org",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://apikios.ytetayninh.vn/api/v1/his/waiting-room?page=0&size=10&chuyenKHOAID=0&khuVucId=0&doiTuongBnId=0",
+					"protocol": "https",
+					"host": [
+						"apikios",
+						"ytetayninh",
+						"vn"
+					],
+					"path": [
+						"api",
+						"v1",
+						"his",
+						"waiting-room"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "chuyenKHOAID",
+							"value": "0"
+						},
+						{
+							"key": "khuVucId",
+							"value": "0"
+						},
+						{
+							"key": "doiTuongBnId",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "A005 - Lay DS khu vuc",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2MTI5NzE1OSwiZXhwIjoxNzYxMjk4OTU5fQ.BZBPGmvBv7cGOIS_-BwQ-DFWt6zkMejQJwrGZN3H4KQQKRT45RncLtjmC0x8jI-o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://apikios.ytetayninh.vn/api/v1/his/area-catalog?page=0&size=10",
+					"protocol": "https",
+					"host": [
+						"apikios",
+						"ytetayninh",
+						"vn"
+					],
+					"path": [
+						"api",
+						"v1",
+						"his",
+						"area-catalog"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "A009 - Lay danh sach tinh/thanh pho",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2MTI5NzE1OSwiZXhwIjoxNzYxMjk4OTU5fQ.BZBPGmvBv7cGOIS_-BwQ-DFWt6zkMejQJwrGZN3H4KQQKRT45RncLtjmC0x8jI-o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apikios.ytetayninh.vn/api/v1/his/get-province",
+					"protocol": "https",
+					"host": [
+						"apikios",
+						"ytetayninh",
+						"vn"
+					],
+					"path": [
+						"api",
+						"v1",
+						"his",
+						"get-province"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "A011 - Lay danh sach xa phuong",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2MTI5NzE1OSwiZXhwIjoxNzYxMjk4OTU5fQ.BZBPGmvBv7cGOIS_-BwQ-DFWt6zkMejQJwrGZN3H4KQQKRT45RncLtjmC0x8jI-o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://apikios.ytetayninh.vn/api/v1/his/get-commune",
+					"protocol": "https",
+					"host": [
+						"apikios",
+						"ytetayninh",
+						"vn"
+					],
+					"path": [
+						"api",
+						"v1",
+						"his",
+						"get-commune"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "A014 - Lay danh sach dan toc",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2MTI5NzE1OSwiZXhwIjoxNzYxMjk4OTU5fQ.BZBPGmvBv7cGOIS_-BwQ-DFWt6zkMejQJwrGZN3H4KQQKRT45RncLtjmC0x8jI-o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://apikios.ytetayninh.vn/api/v1/his/ethnic?page=0&size=10",
+					"protocol": "https",
+					"host": [
+						"apikios",
+						"ytetayninh",
+						"vn"
+					],
+					"path": [
+						"api",
+						"v1",
+						"his",
+						"ethnic"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
