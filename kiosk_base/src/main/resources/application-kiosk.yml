@@ -1,0 +1,147 @@
+kiosk:
+  queries:
+    getAllUsers:
+      sql: "SELECT * FROM users WHERE status = :status"
+
+  stored-procedures:
+    # A003 - Lấy danh số thứ tự
+    generator:
+      name: "KIOS_LAYSTTDKKHAM"
+      inParams:
+        - "tenNb"
+        - "ngaySinh"
+        - "uuTien"
+        - "dichVuId"
+        - "phongId"
+        - "doiTuong"
+        - "khuVucId"
+        - "maTheBhyt"
+        - "tinhThanhPhoId"
+        - "quanHuyenId"
+        - "xaPhuongId"
+        - "tuNgayTheBhyt"
+        - "denNgayTheBhyt"
+        - "maNoiDKBD"
+        - "diaChiTheBhyt"
+        - "soDienThoai"
+        - "gioiTinh"
+        - "nbDichVu"
+        - "maNb"
+        - "diaChi"
+        - "soCanCuoc"
+        - "lyDoVaoVien"
+        - "ngheNghiepId"
+        - "danTocId"
+        - "ngayBhytNamNam"
+        - "ngayCapCccd"
+        - "noiCapCccd"
+        - "KhuVucSongBhyt"
+        - "loaiDungTuyen"
+        - "tenICDChanDoanTuyenDuoi"
+        - "noiChuyen"
+        - "soChuyenTuyen"
+        - "ngayChuyenTuyen"
+        - "hinhThucChuyenTuyen"
+        - "lyDoChuyenTuyen"
+        - "tenNoiChuyen"
+        - "tuNgayChuyenTuyen"
+        - "denNgayChuyenTuyen" 
+    # A004 - Lấy danh sách dịch vụ khám
+    service-catalog:
+      name: "KIOS_LAYDANHSACHDICHVUKHAM"
+      #inParams:
+      #  - "chuyenKhoaId"
+      #  - "khuVucId"
+      #  - "doiTuongBnId"
+    # A005 - Lấy danh sách phòng khám
+    waiting-room:
+      name: "KIOS_LAYDANHSACHPHONGKHAM"
+      inParams:
+        - "maDV"
+        #- "chuyenKhoaId"
+        #- "khuVucId"
+        #- "doiTuongBnId"
+    # A006 - Lấy danh sách khu vực
+    area-catalog:
+      name: "KIOS_LAYDANHSACHKHUVUC"
+    # A007 - Lấy danh sách lịch sử điều trị
+    treatment-history:
+      name: "KIOS_GET_TT_BENHNHAN_DIEUTRI"
+      inParams:
+        - "tenNb"
+        - "ngaySinh"
+        - "tinhThanhPhoId"
+        - "quanHuyenId"
+        - "xaPhuongId"
+        - "gioiTinh"
+        - "soGiayToTuyThan"
+        - "loaiGiayTo"
+    # A008 - Lấy danh số thứ tự
+    update-payment:
+      name: "KIOS_CAPNHATTHANHTOAN_CONGKHAM"
+      inParams:
+        - "maHoSo"
+        - "maNb"
+        - "maGiaoDich"
+        - "thoiGianThanhToanUTC"
+        - "trangThaiThanhToan"
+        - "hinhThucThanhToan"
+        - "maThietBi"
+        - "tenThuNgan"
+        - "maPOS"
+        - "soTien"
+        - "phieuThuId"
+        - "checksum"
+    # A009 - Lấy danh sách tỉnh thành phố
+    get-province:
+      name: "KIOS_LAYDANHSACHTINHTHANHPHO"
+    # A011 - Lấy danh sách phường xã
+    get-commune:
+      name: "KIOS_LAYDANHSACHPHUONGXA"
+      inParams:
+        - "MA_TINH_THANH"
+    # A012 - Lấy danh số thứ tự
+    update-payment-dvkt:
+      name: "KIOS_CAPNHATTHANHTOAN_DVKT"
+      inParams:
+        - "maHoSo"
+        - "maNb"
+        - "maGiaoDich"
+        - "thoiGianThanhToanUTC"
+        - "trangThaiThanhToan"
+        - "hinhThucThanhToan"
+        - "maThietBi"
+        - "tenThuNgan"
+        - "maPOS"
+        - "soTien"
+        - "phieuThuId"
+        - "checksum"
+        - "CT_soPhieu"
+        - "CT_dichVuId"
+        - "CT_soTien"
+    # A013 - Lấy danh sách dịch vụ
+    get-sublinical-payment:
+      name: "KIOS_LAYDVCANTHANHTOAN"
+      inParams:
+        - "code"
+        - "option"
+    # A014 - Lấy danh sách dân tộc
+    ethnic:
+      name: "KIOS_LAYDANHSACHDANTOC"
+    # A015 - Lấy danh sách nghề nghiệp
+    career:
+      name: "KIOS_LAYDANHSACHNGHENGHIEP"
+    # A018 - Lấy thông tin BN
+    information-patient:
+      name: "KIOS_GET_TT_BENHNHAN"
+      inParams:
+        - "code"
+        - "option"
+    # A019 - Lấy danh sách dịch vụ
+    get-tiepnhan-cv:
+      name: "KIOS_GET_TIEP_NHAN_CV"
+      inParams:
+        - "SO_THE_BHYT"
+    # A020 - TEST PVBANK
+    get-pvcom-test:
+      name: "pvcom_test"
