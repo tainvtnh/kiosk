@@ -43,6 +43,9 @@ kiosk:
         - "ngayChuyenTuyen"
         - "hinhThucChuyenTuyen"
         - "lyDoChuyenTuyen"
+        - "tenNoiChuyen"
+        - "tuNgayChuyenTuyen"
+        - "denNgayChuyenTuyen" 
     # A004 - Lấy danh sách dịch vụ khám
     service-catalog:
       name: "KIOS_LAYDANHSACHDICHVUKHAM"
@@ -134,3 +137,8 @@ kiosk:
       inParams:
         - "code"
         - "option"
+    # A019 - Lấy danh sách dịch vụ
+    get-tiepnhan-cv:
+      name: "KIOS_GET_TIEP_NHAN_CV"
+      inParams:
+        - "SO_THE_BHYT"

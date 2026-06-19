@@ -37,7 +37,7 @@ system:
 
 server:
   address: localhost
-  port: 8889
+  port: 8989
 
 logging:
   pattern:

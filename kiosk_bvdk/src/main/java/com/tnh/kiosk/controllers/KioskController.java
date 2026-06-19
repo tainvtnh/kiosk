@@ -1,6 +1,5 @@
 package com.tnh.kiosk.controllers;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -366,82 +365,82 @@ public class KioskController {
     // A013 - Lấy danh sách dịch vụ
   
 
-@GetMapping("/get-sublinical-payment")
-public ResponseEntity<Map<String, Object>> getSublinicalPayment(@RequestParam Map<String, Object> params) {
+    @GetMapping("/get-sublinical-payment")
+    public ResponseEntity<Map<String, Object>> getSublinicalPayment(@RequestParam Map<String, Object> params) {
 
-    List<String> allowedKeys = List.of("code", "option");
+        List<String> allowedKeys = List.of("code", "option");
 
-    Map<String, Object> defaultValues = Map.of(
-            "code", "012345678912",
-            "option", 0
-    );
+        Map<String, Object> defaultValues = Map.of(
+                "code", "012345678912",
+                "option", 0
+        );
 
-    try {
-        validateParams(params, allowedKeys);
-    } catch (IllegalArgumentException ex) {
-        return ResponseEntity.badRequest()
-                .body(Map.of(
-                        "code", 1,
-                        "comment", ex.getMessage(),
-                        "data", new ArrayList<>()
-                ));
-    }
+        try {
+            validateParams(params, allowedKeys);
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of(
+                            "code", 1,
+                            "comment", ex.getMessage(),
+                            "data", new ArrayList<>()
+                    ));
+        }
 
-    Map<String, Object> ciParams = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+        Map<String, Object> ciParams = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
-    Map<String, Object> lowerParams = new HashMap<>();
-    for (Map.Entry<String, Object> entry : params.entrySet()) {
-        lowerParams.put(entry.getKey().toLowerCase(), entry.getValue());
-    }
+        Map<String, Object> lowerParams = new HashMap<>();
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            lowerParams.put(entry.getKey().toLowerCase(), entry.getValue());
+        }
 
-    for (String key : allowedKeys) {
-        String searchKey = key.toLowerCase();
-        Object value = lowerParams.getOrDefault(searchKey, defaultValues.get(key));
-        ciParams.put(key, value);
-    }
+        for (String key : allowedKeys) {
+            String searchKey = key.toLowerCase();
+            Object value = lowerParams.getOrDefault(searchKey, defaultValues.get(key));
+            ciParams.put(key, value);
+        }
 
-    // 🔥 Gọi Stored Procedure từ Service
-    Map<String, Object> result = kioskService.executeProcedure("get-sublinical-payment", ciParams);
+        // 🔥 Gọi Stored Procedure từ Service
+        Map<String, Object> result = kioskService.executeProcedure("get-sublinical-payment", ciParams);
 
-    // ================== 🔥 FIX CHI DINH (BẮT ĐẦU SỬA TỪ ĐÂY) ==================
-    Object dataObj = result.get("data");
+        // ================== 🔥 FIX CHI DINH (BẮT ĐẦU SỬA TỪ ĐÂY) ==================
+        Object dataObj = result.get("data");
 
-    if (dataObj instanceof List<?>) {
-        ObjectMapper mapper = new ObjectMapper();
-        // Ép kiểu sang List<Map> để thao tác với từng record người bệnh
-        List<Map<String, Object>> dataList = (List<Map<String, Object>>) dataObj;
+        if (dataObj instanceof List<?>) {
+            ObjectMapper mapper = new ObjectMapper();
+            // Ép kiểu sang List<Map> để thao tác với từng record người bệnh
+            List<Map<String, Object>> dataList = (List<Map<String, Object>>) dataObj;
 
-        for (Map<String, Object> item : dataList) {
-            Object chiDinhRaw = item.get("chiDinh");
+            for (Map<String, Object> item : dataList) {
+                Object chiDinhRaw = item.get("chiDinh");
 
-            if (chiDinhRaw instanceof String && !((String) chiDinhRaw).isEmpty()) {
-                try {
-                    String chiDinhStr = (String) chiDinhRaw;
+                if (chiDinhRaw instanceof String && !((String) chiDinhRaw).isEmpty()) {
+                    try {
+                        String chiDinhStr = (String) chiDinhRaw;
 
-                    // Kiểm tra nếu chuỗi có format dư thừa kiểu "\"chiDinh\":[...]"
-                    if (chiDinhStr.contains("\"chiDinh\":")) {
-                        // Bọc thêm {} để thành JSON Object hợp lệ trước khi parse
-                        if (!chiDinhStr.trim().startsWith("{")) {
-                            chiDinhStr = "{" + chiDinhStr + "}";
+                        // Kiểm tra nếu chuỗi có format dư thừa kiểu "\"chiDinh\":[...]"
+                        if (chiDinhStr.contains("\"chiDinh\":")) {
+                            // Bọc thêm {} để thành JSON Object hợp lệ trước khi parse
+                            if (!chiDinhStr.trim().startsWith("{")) {
+                                chiDinhStr = "{" + chiDinhStr + "}";
+                            }
+                            Map<String, Object> tempMap = mapper.readValue(chiDinhStr, new TypeReference<Map<String, Object>>() {});
+                            item.put("chiDinh", tempMap.get("chiDinh"));
+                        } else {
+                            // Trường hợp chuỗi chỉ là mảng JSON thuần [...]
+                            List<Object> chiDinhParsed = mapper.readValue(chiDinhStr, new TypeReference<List<Object>>() {});
+                            item.put("chiDinh", chiDinhParsed);
                         }
-                        Map<String, Object> tempMap = mapper.readValue(chiDinhStr, new TypeReference<Map<String, Object>>() {});
-                        item.put("chiDinh", tempMap.get("chiDinh"));
-                    } else {
-                        // Trường hợp chuỗi chỉ là mảng JSON thuần [...]
-                        List<Object> chiDinhParsed = mapper.readValue(chiDinhStr, new TypeReference<List<Object>>() {});
-                        item.put("chiDinh", chiDinhParsed);
+                    } catch (Exception e) {
+                        // Nếu lỗi parse, log ra và giữ nguyên String hoặc để null
+                        System.err.println("Lỗi parse JSON chiDinh: " + e.getMessage());
                     }
-                } catch (Exception e) {
-                    // Nếu lỗi parse, log ra và giữ nguyên String hoặc để null
-                    System.err.println("Lỗi parse JSON chiDinh: " + e.getMessage());
                 }
             }
         }
-    }
-    // ================== 🔥 KẾT THÚC FIX ==================
+        // ================== 🔥 KẾT THÚC FIX ==================
 
-    return ResponseEntity.ok(result);
-}
+        return ResponseEntity.ok(result);
+    }
 
     //A014 - Lấy danh sách dân tộc
     @GetMapping("/ethnic")
@@ -578,6 +577,47 @@ public ResponseEntity<Map<String, Object>> getSublinicalPayment(@RequestParam Ma
 
         // Gọi stored procedure với tham số từ body
         Map<String, Object> result = kioskService.executeProcedure("information-patient", ciParams);
+        Object dataObj = result.get("data");
+
+        if (dataObj instanceof List<?> dataList && !dataList.isEmpty()) {
+           return result;
+        }
+
+        return buildResponse(1, "Không tìm thấy dữ liệu", new HashMap<>());
+    }
+
+    // A019 - Lấy tiếp nhận CV
+    @PostMapping("/get-tiepnhan-cv")
+    public Map<String, Object> getTiepNhanCv(@RequestBody Map<String, Object> body) {
+
+        // Danh sách các key hợp lệ để validate
+        List<String> allowedKeys = List.of("SO_THE_BHYT");
+        
+        // Giá trị mặc định
+        Map<String, Object> defaultValues = Map.of(
+            "SO_THE_BHYT", "LH2807221719247"
+        );
+
+        try {
+            // Validate body request thay vì params
+            validateParams(body, allowedKeys);
+        } catch (IllegalArgumentException ex) {
+            return buildResponse(1, ex.getMessage(), new HashMap<>());
+        }
+
+        // Xử lý Case Insensitive cho Body (nếu client gửi Code thay vì code)
+        Map<String, Object> ciParams = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+        body.forEach((key, value) -> ciParams.put(key, value));
+
+        // Đảm bảo có đủ các key cần thiết từ defaultValues nếu body thiếu
+        for (String key : allowedKeys) {
+            if (!ciParams.containsKey(key)) {
+                ciParams.put(key, defaultValues.get(key));
+            }
+        }
+
+        // Gọi stored procedure với tham số từ body
+        Map<String, Object> result = kioskService.executeProcedure("get-tiepnhan-cv", ciParams);
         Object dataObj = result.get("data");
 
         if (dataObj instanceof List<?> dataList && !dataList.isEmpty()) {
