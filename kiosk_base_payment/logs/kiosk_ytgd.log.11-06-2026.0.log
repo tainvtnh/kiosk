@@ -1,0 +1,31 @@
+11-06-2026 14:56:57.048 [main] INFO  com.tnh.kiosk.KioskApplication.logStarting - Starting KioskApplication using Java 21.0.7 with PID 26848 (D:\Work\APIKIOSK\kiosk\kiosk_bvdk - pvbank\target\classes started by USER in D:\Work\APIKIOSK\kiosk\kiosk_bvdk - pvbank)
+11-06-2026 14:56:57.052 [main] INFO  com.tnh.kiosk.KioskApplication.logStartupProfileInfo - The following 4 profiles are active: "kiosk", "qrinfo", "payment", "dev"
+11-06-2026 14:56:58.278 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port 9999 (http)
+11-06-2026 14:56:58.288 [main] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+11-06-2026 14:56:58.289 [main] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/10.1.16]
+11-06-2026 14:56:58.343 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
+11-06-2026 14:56:58.344 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 1253 ms
+11-06-2026 14:56:58.563 [main] DEBUG o.s.jdbc.datasource.DataSourceUtils.doGetConnection - Fetching JDBC Connection from DataSource
+11-06-2026 14:56:58.564 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+11-06-2026 14:56:58.873 [main] INFO  com.zaxxer.hikari.pool.HikariPool.checkFailFast - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 64e22bc8-c72d-4933-b305-7415bd31fdbf
+11-06-2026 14:56:58.875 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+11-06-2026 14:56:59.696 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+11-06-2026 14:56:59.751 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration.getOrDeducePassword - 
+
+Using generated security password: a29178d5-0cf2-4986-9ae0-54a5125441a3
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+11-06-2026 14:56:59.965 [main] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@627d5f1, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@105fe81e, org.springframework.security.web.context.SecurityContextHolderFilter@7f53a31f, org.springframework.security.web.header.HeaderWriterFilter@1958524b, org.springframework.web.filter.CorsFilter@af94b0b, org.springframework.security.web.authentication.logout.LogoutFilter@5c1687d1, com.tnh.kiosk.security.JwtAuthFilter@49fdbe2b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@29d563bd, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@73fe7483, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@208185c0, org.springframework.security.web.session.SessionManagementFilter@13b4ee4e, org.springframework.security.web.access.ExceptionTranslationFilter@39a30d1a, org.springframework.security.web.access.intercept.AuthorizationFilter@1e7113f8]
+11-06-2026 14:57:00.241 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port 9999 (http) with context path ''
+11-06-2026 14:57:00.247 [main] INFO  com.tnh.kiosk.KioskApplication.logStarted - Started KioskApplication in 3.727 seconds (process running for 4.061)
+11-06-2026 14:57:00.250 [main] INFO  com.tnh.kiosk.KioskApplication.logApplicationStartup - ----------------------------------------------------------
+	Application 'tnh-kios-api' is running! Access URLs:
+	Local: 	http://localhost:9999/
+	External: 	http://localhost:9999/
+	Profile(s): 	[kiosk, qrinfo, payment, dev]
+	Startup time: 2ms
+	JVM Version: 21.0.7
+----------------------------------------------------------
+11-06-2026 14:57:07.508 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+11-06-2026 14:57:07.512 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.

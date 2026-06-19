@@ -1,0 +1,15 @@
+vietqr:
+  pvcombank:
+    base-url: https://apis-uat.pvcombank.io
+    client-id: 684181845d9f745dc38e455b08185df4
+    client-secret: 1221b05a6c30eed93270274b38126e4a
+    merchant:
+      client-id: 684181845d9f745dc38e455b08185df4
+      name: "BENH VIEN TINH TAY NINH"
+      account-no: "105003834196"
+    security:
+      # Base64 encoded SHA512withRSA Public Key (replace with the actual public key provided by PVcomBank)
+      #pvcombank-public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzq2c9hQ3L...
+      pvcombank-public-key: classpath:pvcb_bvttn_public_key_test.pem
+    kiosk:
+      checksum-key: kiosk_vietqr_secret_key_2026

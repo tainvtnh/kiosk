@@ -1,0 +1,657 @@
+19-06-2026 09:28:57.978 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+19-06-2026 09:28:58.128 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
+19-06-2026 09:50:49.386 [main] INFO  com.tnh.kiosk.KioskApplication.logStarting - Starting KioskApplication using Java 21.0.7 with PID 22108 (D:\Work\APIKIOSK\kiosk\kiosk_base_payment\target\classes started by USER in D:\Work\APIKIOSK\kiosk\kiosk_base_payment)
+19-06-2026 09:50:49.387 [main] INFO  com.tnh.kiosk.KioskApplication.logStartupProfileInfo - The following 4 profiles are active: "kiosk", "qrinfo", "payment", "dev"
+19-06-2026 09:50:50.448 [main] INFO  o.s.cloud.context.scope.GenericScope.setSerializationId - BeanFactory id=2b03a3e5-ba52-3e90-b766-c27f1316a28f
+19-06-2026 09:50:50.818 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port 9999 (http)
+19-06-2026 09:50:50.827 [main] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+19-06-2026 09:50:50.827 [main] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/10.1.16]
+19-06-2026 09:50:50.902 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
+19-06-2026 09:50:50.903 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 1468 ms
+19-06-2026 09:50:51.156 [main] DEBUG o.s.jdbc.datasource.DataSourceUtils.doGetConnection - Fetching JDBC Connection from DataSource
+19-06-2026 09:50:51.158 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+19-06-2026 09:50:51.433 [main] INFO  com.zaxxer.hikari.pool.HikariPool.checkFailFast - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: e5747a9d-9218-49d1-b0b0-e98572f6ad29
+19-06-2026 09:50:51.434 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+19-06-2026 09:50:52.782 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+19-06-2026 09:50:53.099 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration.getOrDeducePassword - 
+
+Using generated security password: 7122f422-9190-4317-9fa1-8d0967920a95
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+19-06-2026 09:50:53.346 [main] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@477dc93, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@781ecbac, org.springframework.security.web.context.SecurityContextHolderFilter@308498a8, org.springframework.security.web.header.HeaderWriterFilter@63541960, org.springframework.web.filter.CorsFilter@5cb654e3, org.springframework.security.web.authentication.logout.LogoutFilter@d140627, com.tnh.kiosk.security.JwtAuthFilter@230232b0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6cca70e3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4a5a8c6f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3f89d36c, org.springframework.security.web.session.SessionManagementFilter@6dc98c02, org.springframework.security.web.access.ExceptionTranslationFilter@71eb4ea4, org.springframework.security.web.access.intercept.AuthorizationFilter@58c48a23]
+19-06-2026 09:50:53.724 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port 9999 (http) with context path ''
+19-06-2026 09:50:53.736 [main] INFO  com.tnh.kiosk.KioskApplication.logStarted - Started KioskApplication in 4.896 seconds (process running for 5.221)
+19-06-2026 09:50:53.738 [main] INFO  com.tnh.kiosk.KioskApplication.logApplicationStartup - ----------------------------------------------------------
+	Application 'tnh-kios-api' is running! Access URLs:
+	Local: 	http://localhost:9999/
+	External: 	http://localhost:9999/
+	Profile(s): 	[kiosk, qrinfo, payment, dev]
+	Startup time: 0ms
+	JVM Version: 21.0.7
+----------------------------------------------------------
+19-06-2026 09:53:28.051 [http-nio-127.0.0.1-9999-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
+19-06-2026 09:53:28.052 [http-nio-127.0.0.1-9999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
+19-06-2026 09:53:28.054 [http-nio-127.0.0.1-9999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 2 ms
+19-06-2026 09:53:28.080 [http-nio-127.0.0.1-9999-exec-1] WARN  o.s.w.s.h.HandlerMappingIntrospector.logCacheMiss - Cache miss for REQUEST dispatch to '/api/v1/vietqr/ipn' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+19-06-2026 09:53:28.117 [http-nio-127.0.0.1-9999-exec-1] ERROR c.tnh.kiosk.security.JwtAuthFilter.doFilterInternal - ❌ Invalid JWT: Invalid JWT token
+io.jsonwebtoken.JwtException: Invalid JWT token
+	at com.tnh.kiosk.security.JwtUtil.validateToken(JwtUtil.java:69)
+	at com.tnh.kiosk.security.JwtAuthFilter.doFilterInternal(JwtAuthFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:352)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:268)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: io.jsonwebtoken.io.DecodingException: Illegal base64url character: '"'
+	at io.jsonwebtoken.io.Base64.ctoi(Base64.java:221)
+	at io.jsonwebtoken.io.Base64.decodeFast(Base64.java:270)
+	at io.jsonwebtoken.io.Base64Decoder.decode(Base64Decoder.java:36)
+	at io.jsonwebtoken.io.Base64Decoder.decode(Base64Decoder.java:23)
+	at io.jsonwebtoken.io.ExceptionPropagatingDecoder.decode(ExceptionPropagatingDecoder.java:36)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:288)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:529)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parseClaimsJws(DefaultJwtParser.java:589)
+	at io.jsonwebtoken.impl.ImmutableJwtParser.parseClaimsJws(ImmutableJwtParser.java:173)
+	at com.tnh.kiosk.security.JwtUtil.parseClaims(JwtUtil.java:79)
+	at com.tnh.kiosk.security.JwtUtil.validateToken(JwtUtil.java:66)
+	... 56 common frames omitted
+19-06-2026 09:54:24.591 [http-nio-127.0.0.1-9999-exec-2] WARN  o.s.w.s.h.HandlerMappingIntrospector.logCacheMiss - Cache miss for REQUEST dispatch to '/api/v1/vietqr/ipn' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+19-06-2026 09:54:24.649 [http-nio-127.0.0.1-9999-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver.logException - Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Invalid mime type "x-www-form-urlencoded": does not contain '/']
+19-06-2026 09:54:52.743 [http-nio-127.0.0.1-9999-exec-3] INFO  c.t.vietqr.service.PvcomBankService.processIpn - Verifying IPN callback signature...
+19-06-2026 09:54:52.745 [http-nio-127.0.0.1-9999-exec-3] INFO  c.t.vietqr.service.PvcomBankService.processIpn - IPN Signature verified. Processing payment for invoice: HD123456789TTBV
+19-06-2026 09:54:53.031 [http-nio-127.0.0.1-9999-exec-3] ERROR c.t.vietqr.service.PvcomBankService.processIpn - Invoice HD123456789TTBV not found in local records!
+19-06-2026 09:58:27.485 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+19-06-2026 09:58:27.490 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
+19-06-2026 09:59:00.822 [main] INFO  com.tnh.kiosk.KioskApplication.logStarting - Starting KioskApplication using Java 21.0.7 with PID 33912 (D:\Work\APIKIOSK\kiosk\kiosk_base_payment\target\classes started by USER in D:\Work\APIKIOSK\kiosk\kiosk_base_payment)
+19-06-2026 09:59:00.824 [main] INFO  com.tnh.kiosk.KioskApplication.logStartupProfileInfo - The following 4 profiles are active: "kiosk", "qrinfo", "payment", "dev"
+19-06-2026 09:59:01.771 [main] INFO  o.s.cloud.context.scope.GenericScope.setSerializationId - BeanFactory id=2b03a3e5-ba52-3e90-b766-c27f1316a28f
+19-06-2026 09:59:02.138 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port 9999 (http)
+19-06-2026 09:59:02.147 [main] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+19-06-2026 09:59:02.147 [main] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/10.1.16]
+19-06-2026 09:59:02.203 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
+19-06-2026 09:59:02.203 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 1321 ms
+19-06-2026 09:59:02.440 [main] DEBUG o.s.jdbc.datasource.DataSourceUtils.doGetConnection - Fetching JDBC Connection from DataSource
+19-06-2026 09:59:02.440 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+19-06-2026 09:59:02.731 [main] INFO  com.zaxxer.hikari.pool.HikariPool.checkFailFast - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: edb79814-ad06-45e3-b38c-8ac6527fe123
+19-06-2026 09:59:02.733 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+19-06-2026 09:59:04.084 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+19-06-2026 09:59:04.400 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration.getOrDeducePassword - 
+
+Using generated security password: dceb2b18-4ae7-44e8-ba36-59481d37100f
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+19-06-2026 09:59:04.634 [main] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@197c3101, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7b5e1b16, org.springframework.security.web.context.SecurityContextHolderFilter@51751265, org.springframework.security.web.header.HeaderWriterFilter@41a6ab50, org.springframework.web.filter.CorsFilter@4d65fbad, org.springframework.security.web.authentication.logout.LogoutFilter@475a8415, com.tnh.kiosk.security.JwtAuthFilter@66451058, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5295a774, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3e09067, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@55fc6344, org.springframework.security.web.session.SessionManagementFilter@2db07651, org.springframework.security.web.access.ExceptionTranslationFilter@7473cfe2, org.springframework.security.web.access.intercept.AuthorizationFilter@11ce61d1]
+19-06-2026 09:59:04.993 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port 9999 (http) with context path ''
+19-06-2026 09:59:05.005 [main] INFO  com.tnh.kiosk.KioskApplication.logStarted - Started KioskApplication in 4.724 seconds (process running for 5.032)
+19-06-2026 09:59:05.007 [main] INFO  com.tnh.kiosk.KioskApplication.logApplicationStartup - ----------------------------------------------------------
+	Application 'tnh-kios-api' is running! Access URLs:
+	Local: 	http://localhost:9999/
+	External: 	http://localhost:9999/
+	Profile(s): 	[kiosk, qrinfo, payment, dev]
+	Startup time: 1ms
+	JVM Version: 21.0.7
+----------------------------------------------------------
+19-06-2026 09:59:37.051 [http-nio-127.0.0.1-9999-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
+19-06-2026 09:59:37.052 [http-nio-127.0.0.1-9999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
+19-06-2026 09:59:37.053 [http-nio-127.0.0.1-9999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 1 ms
+19-06-2026 09:59:37.061 [http-nio-127.0.0.1-9999-exec-1] WARN  o.s.w.s.h.HandlerMappingIntrospector.logCacheMiss - Cache miss for REQUEST dispatch to '/api/v1/vietqr/ipn' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+19-06-2026 09:59:37.071 [http-nio-127.0.0.1-9999-exec-1] WARN  o.s.w.s.h.HandlerMappingIntrospector.logCacheMiss - Cache miss for REQUEST dispatch to '/api/v1/vietqr/ipn' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+19-06-2026 09:59:37.133 [http-nio-127.0.0.1-9999-exec-1] INFO  c.t.vietqr.service.PvcomBankService.processIpn - Verifying IPN callback signature...
+19-06-2026 09:59:37.136 [http-nio-127.0.0.1-9999-exec-1] INFO  c.t.vietqr.service.PvcomBankService.processIpn - IPN Signature verified. Processing payment for invoice: HD123456789TTBV
+19-06-2026 10:06:56.199 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+19-06-2026 10:06:56.203 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
+19-06-2026 10:33:37.408 [main] INFO  com.tnh.kiosk.KioskApplication.logStarting - Starting KioskApplication using Java 21.0.7 with PID 28496 (D:\Work\APIKIOSK\kiosk\kiosk_base_payment\target\classes started by USER in D:\Work\APIKIOSK\kiosk\kiosk_base_payment)
+19-06-2026 10:33:37.428 [main] INFO  com.tnh.kiosk.KioskApplication.logStartupProfileInfo - The following 4 profiles are active: "kiosk", "qrinfo", "payment", "dev"
+19-06-2026 10:33:39.707 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext.refresh - Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Unable to load cache item
+19-06-2026 10:33:39.722 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger.logMessage - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+19-06-2026 10:33:39.741 [main] ERROR o.s.boot.SpringApplication.reportFailure - Application run failed
+java.lang.IllegalStateException: Unable to load cache item
+	at org.springframework.cglib.core.internal.LoadingCache.createEntry(LoadingCache.java:75)
+	at org.springframework.cglib.core.internal.LoadingCache.get(LoadingCache.java:34)
+	at org.springframework.cglib.core.AbstractClassGenerator$ClassLoaderData.get(AbstractClassGenerator.java:130)
+	at org.springframework.cglib.core.AbstractClassGenerator.create(AbstractClassGenerator.java:317)
+	at org.springframework.cglib.proxy.Enhancer.createHelper(Enhancer.java:562)
+	at org.springframework.cglib.proxy.Enhancer.createClass(Enhancer.java:407)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer.createClass(ConfigurationClassEnhancer.java:138)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer.enhance(ConfigurationClassEnhancer.java:109)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.enhanceConfigurationClasses(ConfigurationClassPostProcessor.java:533)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanFactory(ConfigurationClassPostProcessor.java:310)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:363)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:153)
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:775)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:597)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:455)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:323)
+	at com.tnh.kiosk.KioskApplication.main(KioskApplication.java:45)
+Caused by: java.lang.NoClassDefFoundError: JwtAuthFilter
+	at java.base/java.lang.Class.getDeclaredConstructors0(Native Method)
+	at java.base/java.lang.Class.privateGetDeclaredConstructors(Class.java:3549)
+	at java.base/java.lang.Class.getDeclaredConstructors(Class.java:2727)
+	at org.springframework.cglib.proxy.Enhancer.generateClass(Enhancer.java:655)
+	at org.springframework.cglib.transform.TransformingClassGenerator.generateClass(TransformingClassGenerator.java:35)
+	at org.springframework.cglib.core.DefaultGeneratorStrategy.generate(DefaultGeneratorStrategy.java:26)
+	at org.springframework.cglib.core.ClassLoaderAwareGeneratorStrategy.generate(ClassLoaderAwareGeneratorStrategy.java:57)
+	at org.springframework.cglib.core.AbstractClassGenerator.generate(AbstractClassGenerator.java:366)
+	at org.springframework.cglib.proxy.Enhancer.generate(Enhancer.java:575)
+	at org.springframework.cglib.core.AbstractClassGenerator$ClassLoaderData.lambda$new$1(AbstractClassGenerator.java:107)
+	at org.springframework.cglib.core.internal.LoadingCache.lambda$createEntry$1(LoadingCache.java:52)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at org.springframework.cglib.core.internal.LoadingCache.createEntry(LoadingCache.java:57)
+	... 18 common frames omitted
+Caused by: java.lang.ClassNotFoundException: JwtAuthFilter
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)
+	... 31 common frames omitted
+19-06-2026 10:34:20.857 [main] INFO  com.tnh.kiosk.KioskApplication.logStarting - Starting KioskApplication using Java 21.0.7 with PID 23908 (D:\Work\APIKIOSK\kiosk\kiosk_base_payment\target\classes started by USER in D:\Work\APIKIOSK\kiosk\kiosk_base_payment)
+19-06-2026 10:34:20.859 [main] INFO  com.tnh.kiosk.KioskApplication.logStartupProfileInfo - The following 4 profiles are active: "kiosk", "qrinfo", "payment", "dev"
+19-06-2026 10:34:21.750 [main] INFO  o.s.cloud.context.scope.GenericScope.setSerializationId - BeanFactory id=2b03a3e5-ba52-3e90-b766-c27f1316a28f
+19-06-2026 10:34:22.113 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port 9999 (http)
+19-06-2026 10:34:22.121 [main] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+19-06-2026 10:34:22.121 [main] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/10.1.16]
+19-06-2026 10:34:22.180 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
+19-06-2026 10:34:22.180 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 1278 ms
+19-06-2026 10:34:22.428 [main] DEBUG o.s.jdbc.datasource.DataSourceUtils.doGetConnection - Fetching JDBC Connection from DataSource
+19-06-2026 10:34:22.430 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+19-06-2026 10:34:22.788 [main] INFO  com.zaxxer.hikari.pool.HikariPool.checkFailFast - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 7f6561cc-d19d-4477-8813-09529a3bd7c6
+19-06-2026 10:34:22.790 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+19-06-2026 10:34:24.073 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+19-06-2026 10:34:24.386 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration.getOrDeducePassword - 
+
+Using generated security password: 50c6d54b-5069-4b98-b11b-eaf8b7a951cc
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+19-06-2026 10:34:24.621 [main] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2357f000, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@329b4b8b, org.springframework.security.web.context.SecurityContextHolderFilter@520e6089, org.springframework.security.web.header.HeaderWriterFilter@b7b26c6, org.springframework.web.filter.CorsFilter@6124a7c0, org.springframework.security.web.authentication.logout.LogoutFilter@14f11a56, com.tnh.kiosk.security.JwtAuthFilter@120df990, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@59c2bf78, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@44f8d884, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@77a13162, org.springframework.security.web.session.SessionManagementFilter@3299e315, org.springframework.security.web.access.ExceptionTranslationFilter@2aaed928, org.springframework.security.web.access.intercept.AuthorizationFilter@5a097a83]
+19-06-2026 10:34:25.000 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port 9999 (http) with context path ''
+19-06-2026 10:34:25.012 [main] INFO  com.tnh.kiosk.KioskApplication.logStarted - Started KioskApplication in 4.656 seconds (process running for 4.956)
+19-06-2026 10:34:25.014 [main] INFO  com.tnh.kiosk.KioskApplication.logApplicationStartup - ----------------------------------------------------------
+	Application 'tnh-kios-api' is running! Access URLs:
+	Local: 	http://localhost:9999/
+	External: 	http://localhost:9999/
+	Profile(s): 	[kiosk, qrinfo, payment, dev]
+	Startup time: 0ms
+	JVM Version: 21.0.7
+----------------------------------------------------------
+19-06-2026 10:34:52.736 [http-nio-127.0.0.1-9999-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
+19-06-2026 10:34:52.736 [http-nio-127.0.0.1-9999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
+19-06-2026 10:34:52.738 [http-nio-127.0.0.1-9999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 1 ms
+19-06-2026 10:34:52.746 [http-nio-127.0.0.1-9999-exec-1] WARN  o.s.w.s.h.HandlerMappingIntrospector.logCacheMiss - Cache miss for REQUEST dispatch to '/api/v1/vietqr/ipn' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+19-06-2026 10:34:52.757 [http-nio-127.0.0.1-9999-exec-1] WARN  o.s.w.s.h.HandlerMappingIntrospector.logCacheMiss - Cache miss for REQUEST dispatch to '/api/v1/vietqr/ipn' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+19-06-2026 10:35:13.087 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+19-06-2026 10:35:13.091 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
+19-06-2026 10:35:47.604 [main] INFO  com.tnh.kiosk.KioskApplication.logStarting - Starting KioskApplication using Java 21.0.7 with PID 34544 (D:\Work\APIKIOSK\kiosk\kiosk_base_payment\target\classes started by USER in D:\Work\APIKIOSK\kiosk\kiosk_base_payment)
+19-06-2026 10:35:47.606 [main] INFO  com.tnh.kiosk.KioskApplication.logStartupProfileInfo - The following 4 profiles are active: "kiosk", "qrinfo", "payment", "dev"
+19-06-2026 10:35:48.477 [main] INFO  o.s.cloud.context.scope.GenericScope.setSerializationId - BeanFactory id=2b03a3e5-ba52-3e90-b766-c27f1316a28f
+19-06-2026 10:35:48.815 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port 9999 (http)
+19-06-2026 10:35:48.822 [main] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+19-06-2026 10:35:48.823 [main] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/10.1.16]
+19-06-2026 10:35:48.879 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
+19-06-2026 10:35:48.879 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 1229 ms
+19-06-2026 10:35:49.105 [main] DEBUG o.s.jdbc.datasource.DataSourceUtils.doGetConnection - Fetching JDBC Connection from DataSource
+19-06-2026 10:35:49.106 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+19-06-2026 10:35:49.411 [main] INFO  com.zaxxer.hikari.pool.HikariPool.checkFailFast - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 21a29aff-8368-4ebe-a390-ec3e8ab4d226
+19-06-2026 10:35:49.413 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+19-06-2026 10:35:50.754 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+19-06-2026 10:35:51.057 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration.getOrDeducePassword - 
+
+Using generated security password: 40b63d01-debb-4d59-9269-c61bcece62f1
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+19-06-2026 10:35:51.287 [main] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@759862a2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@543b855, org.springframework.security.web.context.SecurityContextHolderFilter@718b9d56, org.springframework.security.web.header.HeaderWriterFilter@7473cfe2, org.springframework.web.filter.CorsFilter@197c3101, org.springframework.security.web.authentication.logout.LogoutFilter@6179af64, com.tnh.kiosk.security.JwtAuthFilter@74fb5b59, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@51751265, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7f59f4e4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7b5e1b16, org.springframework.security.web.session.SessionManagementFilter@155cf9f6, org.springframework.security.web.access.ExceptionTranslationFilter@217abcc9, org.springframework.security.web.access.intercept.AuthorizationFilter@6592a73b]
+19-06-2026 10:35:51.639 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port 9999 (http) with context path ''
+19-06-2026 10:35:51.651 [main] INFO  com.tnh.kiosk.KioskApplication.logStarted - Started KioskApplication in 4.553 seconds (process running for 4.869)
+19-06-2026 10:35:51.653 [main] INFO  com.tnh.kiosk.KioskApplication.logApplicationStartup - ----------------------------------------------------------
+	Application 'tnh-kios-api' is running! Access URLs:
+	Local: 	http://localhost:9999/
+	External: 	http://localhost:9999/
+	Profile(s): 	[kiosk, qrinfo, payment, dev]
+	Startup time: 1ms
+	JVM Version: 21.0.7
+----------------------------------------------------------
+19-06-2026 10:35:56.941 [http-nio-127.0.0.1-9999-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
+19-06-2026 10:35:56.942 [http-nio-127.0.0.1-9999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
+19-06-2026 10:35:56.943 [http-nio-127.0.0.1-9999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 1 ms
+19-06-2026 10:35:56.952 [http-nio-127.0.0.1-9999-exec-1] WARN  o.s.w.s.h.HandlerMappingIntrospector.logCacheMiss - Cache miss for REQUEST dispatch to '/api/v1/vietqr/ipn' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+19-06-2026 10:35:56.962 [http-nio-127.0.0.1-9999-exec-1] WARN  o.s.w.s.h.HandlerMappingIntrospector.logCacheMiss - Cache miss for REQUEST dispatch to '/api/v1/vietqr/ipn' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+19-06-2026 10:35:57.016 [http-nio-127.0.0.1-9999-exec-1] INFO  c.t.vietqr.service.PvcomBankService.processIpn - Verifying IPN callback signature...
+19-06-2026 10:35:57.018 [http-nio-127.0.0.1-9999-exec-1] INFO  c.t.vietqr.service.PvcomBankService.processIpn - IPN Signature verified. Processing payment for invoice: HD123456789TTBV
+19-06-2026 10:35:57.154 [http-nio-127.0.0.1-9999-exec-1] INFO  c.t.vietqr.service.PvcomBankService.processIpn - Verifying IPN signature success for invoice: HD123456789TTBV
+19-06-2026 10:36:06.361 [http-nio-127.0.0.1-9999-exec-2] INFO  c.t.vietqr.service.PvcomBankService.processIpn - Verifying IPN callback signature...
+19-06-2026 10:36:06.362 [http-nio-127.0.0.1-9999-exec-2] INFO  c.t.vietqr.service.PvcomBankService.processIpn - IPN Signature verified. Processing payment for invoice: HD123456789TTBV
+19-06-2026 10:36:06.368 [http-nio-127.0.0.1-9999-exec-2] INFO  c.t.vietqr.service.PvcomBankService.processIpn - Invoice HD123456789TTBV has already been processed and marked as PAID.
+19-06-2026 10:39:50.784 [http-nio-127.0.0.1-9999-exec-5] ERROR c.tnh.kiosk.security.JwtAuthFilter.doFilterInternal - ❌ Invalid JWT: Invalid JWT token
+io.jsonwebtoken.JwtException: Invalid JWT token
+	at com.tnh.kiosk.security.JwtUtil.validateToken(JwtUtil.java:69)
+	at com.tnh.kiosk.security.JwtAuthFilter.doFilterInternal(JwtAuthFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:352)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:268)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: io.jsonwebtoken.UnsupportedJwtException: The parsed JWT indicates it was signed with the 'RS256' signature algorithm, but the provided javax.crypto.spec.SecretKeySpec key may not be used to verify RS256 signatures.  Because the specified key reflects a specific and expected algorithm, and the JWT does not reflect this algorithm, it is likely that the JWT was not expected and therefore should not be trusted.  Another possibility is that the parser was provided the incorrect signature verification key, but this cannot be assumed for security reasons.
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:393)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:529)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parseClaimsJws(DefaultJwtParser.java:589)
+	at io.jsonwebtoken.impl.ImmutableJwtParser.parseClaimsJws(ImmutableJwtParser.java:173)
+	at com.tnh.kiosk.security.JwtUtil.parseClaims(JwtUtil.java:79)
+	at com.tnh.kiosk.security.JwtUtil.validateToken(JwtUtil.java:66)
+	... 56 common frames omitted
+Caused by: io.jsonwebtoken.security.InvalidKeyException: RSA verification keys must be RSAKey instances.
+	at io.jsonwebtoken.SignatureAlgorithm.assertValid(SignatureAlgorithm.java:424)
+	at io.jsonwebtoken.SignatureAlgorithm.assertValidVerificationKey(SignatureAlgorithm.java:328)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:380)
+	... 61 common frames omitted
+19-06-2026 10:40:14.629 [http-nio-127.0.0.1-9999-exec-6] ERROR c.tnh.kiosk.security.JwtAuthFilter.doFilterInternal - ❌ Invalid JWT: Invalid JWT token
+io.jsonwebtoken.JwtException: Invalid JWT token
+	at com.tnh.kiosk.security.JwtUtil.validateToken(JwtUtil.java:69)
+	at com.tnh.kiosk.security.JwtAuthFilter.doFilterInternal(JwtAuthFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:352)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:268)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: io.jsonwebtoken.UnsupportedJwtException: The parsed JWT indicates it was signed with the 'RS256' signature algorithm, but the provided javax.crypto.spec.SecretKeySpec key may not be used to verify RS256 signatures.  Because the specified key reflects a specific and expected algorithm, and the JWT does not reflect this algorithm, it is likely that the JWT was not expected and therefore should not be trusted.  Another possibility is that the parser was provided the incorrect signature verification key, but this cannot be assumed for security reasons.
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:393)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:529)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parseClaimsJws(DefaultJwtParser.java:589)
+	at io.jsonwebtoken.impl.ImmutableJwtParser.parseClaimsJws(ImmutableJwtParser.java:173)
+	at com.tnh.kiosk.security.JwtUtil.parseClaims(JwtUtil.java:79)
+	at com.tnh.kiosk.security.JwtUtil.validateToken(JwtUtil.java:66)
+	... 56 common frames omitted
+Caused by: io.jsonwebtoken.security.InvalidKeyException: RSA verification keys must be RSAKey instances.
+	at io.jsonwebtoken.SignatureAlgorithm.assertValid(SignatureAlgorithm.java:424)
+	at io.jsonwebtoken.SignatureAlgorithm.assertValidVerificationKey(SignatureAlgorithm.java:328)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:380)
+	... 61 common frames omitted
+19-06-2026 10:40:36.103 [http-nio-127.0.0.1-9999-exec-7] ERROR c.tnh.kiosk.security.JwtAuthFilter.doFilterInternal - ❌ Invalid JWT: Invalid JWT token
+io.jsonwebtoken.JwtException: Invalid JWT token
+	at com.tnh.kiosk.security.JwtUtil.validateToken(JwtUtil.java:69)
+	at com.tnh.kiosk.security.JwtAuthFilter.doFilterInternal(JwtAuthFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:352)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:268)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: io.jsonwebtoken.UnsupportedJwtException: The parsed JWT indicates it was signed with the 'RS256' signature algorithm, but the provided javax.crypto.spec.SecretKeySpec key may not be used to verify RS256 signatures.  Because the specified key reflects a specific and expected algorithm, and the JWT does not reflect this algorithm, it is likely that the JWT was not expected and therefore should not be trusted.  Another possibility is that the parser was provided the incorrect signature verification key, but this cannot be assumed for security reasons.
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:393)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:529)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parseClaimsJws(DefaultJwtParser.java:589)
+	at io.jsonwebtoken.impl.ImmutableJwtParser.parseClaimsJws(ImmutableJwtParser.java:173)
+	at com.tnh.kiosk.security.JwtUtil.parseClaims(JwtUtil.java:79)
+	at com.tnh.kiosk.security.JwtUtil.validateToken(JwtUtil.java:66)
+	... 56 common frames omitted
+Caused by: io.jsonwebtoken.security.InvalidKeyException: RSA verification keys must be RSAKey instances.
+	at io.jsonwebtoken.SignatureAlgorithm.assertValid(SignatureAlgorithm.java:424)
+	at io.jsonwebtoken.SignatureAlgorithm.assertValidVerificationKey(SignatureAlgorithm.java:328)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:380)
+	... 61 common frames omitted
+19-06-2026 10:41:21.182 [http-nio-127.0.0.1-9999-exec-4] ERROR c.tnh.kiosk.security.JwtAuthFilter.doFilterInternal - ❌ Invalid JWT: Invalid JWT token
+io.jsonwebtoken.JwtException: Invalid JWT token
+	at com.tnh.kiosk.security.JwtUtil.validateToken(JwtUtil.java:69)
+	at com.tnh.kiosk.security.JwtAuthFilter.doFilterInternal(JwtAuthFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:352)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:268)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: io.jsonwebtoken.UnsupportedJwtException: The parsed JWT indicates it was signed with the 'RS256' signature algorithm, but the provided javax.crypto.spec.SecretKeySpec key may not be used to verify RS256 signatures.  Because the specified key reflects a specific and expected algorithm, and the JWT does not reflect this algorithm, it is likely that the JWT was not expected and therefore should not be trusted.  Another possibility is that the parser was provided the incorrect signature verification key, but this cannot be assumed for security reasons.
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:393)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:529)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parseClaimsJws(DefaultJwtParser.java:589)
+	at io.jsonwebtoken.impl.ImmutableJwtParser.parseClaimsJws(ImmutableJwtParser.java:173)
+	at com.tnh.kiosk.security.JwtUtil.parseClaims(JwtUtil.java:79)
+	at com.tnh.kiosk.security.JwtUtil.validateToken(JwtUtil.java:66)
+	... 56 common frames omitted
+Caused by: io.jsonwebtoken.security.InvalidKeyException: RSA verification keys must be RSAKey instances.
+	at io.jsonwebtoken.SignatureAlgorithm.assertValid(SignatureAlgorithm.java:424)
+	at io.jsonwebtoken.SignatureAlgorithm.assertValidVerificationKey(SignatureAlgorithm.java:328)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:380)
+	... 61 common frames omitted
+19-06-2026 10:41:22.979 [http-nio-127.0.0.1-9999-exec-8] ERROR c.tnh.kiosk.security.JwtAuthFilter.doFilterInternal - ❌ Invalid JWT: Invalid JWT token
+io.jsonwebtoken.JwtException: Invalid JWT token
+	at com.tnh.kiosk.security.JwtUtil.validateToken(JwtUtil.java:69)
+	at com.tnh.kiosk.security.JwtAuthFilter.doFilterInternal(JwtAuthFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:352)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:268)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: io.jsonwebtoken.UnsupportedJwtException: The parsed JWT indicates it was signed with the 'RS256' signature algorithm, but the provided javax.crypto.spec.SecretKeySpec key may not be used to verify RS256 signatures.  Because the specified key reflects a specific and expected algorithm, and the JWT does not reflect this algorithm, it is likely that the JWT was not expected and therefore should not be trusted.  Another possibility is that the parser was provided the incorrect signature verification key, but this cannot be assumed for security reasons.
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:393)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:529)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parseClaimsJws(DefaultJwtParser.java:589)
+	at io.jsonwebtoken.impl.ImmutableJwtParser.parseClaimsJws(ImmutableJwtParser.java:173)
+	at com.tnh.kiosk.security.JwtUtil.parseClaims(JwtUtil.java:79)
+	at com.tnh.kiosk.security.JwtUtil.validateToken(JwtUtil.java:66)
+	... 56 common frames omitted
+Caused by: io.jsonwebtoken.security.InvalidKeyException: RSA verification keys must be RSAKey instances.
+	at io.jsonwebtoken.SignatureAlgorithm.assertValid(SignatureAlgorithm.java:424)
+	at io.jsonwebtoken.SignatureAlgorithm.assertValidVerificationKey(SignatureAlgorithm.java:328)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:380)
+	... 61 common frames omitted
+19-06-2026 10:41:40.965 [http-nio-127.0.0.1-9999-exec-9] INFO  c.t.vietqr.service.PvcomBankService.processIpn - Verifying IPN callback signature...
+19-06-2026 10:41:40.966 [http-nio-127.0.0.1-9999-exec-9] INFO  c.t.vietqr.service.PvcomBankService.processIpn - IPN Signature verified. Processing payment for invoice: HD123456789TTBV
+19-06-2026 10:41:41.301 [http-nio-127.0.0.1-9999-exec-9] INFO  c.t.vietqr.service.PvcomBankService.processIpn - Invoice HD123456789TTBV has already been processed and marked as PAID.
+19-06-2026 10:41:54.001 [http-nio-127.0.0.1-9999-exec-10] WARN  c.t.vietqr.service.PvcomBankService.verifyKioskChecksum - Checksum verification failed. Expected MD5: da86de3d1e8e3cf49d0baabd54368be1, Expected SHA-256: 0d4641b36122ffc82413dd87a9c5342ab22e4c17e2e5b44658453610b56e15b0, Received: abc123xyz
+19-06-2026 10:44:23.728 [http-nio-127.0.0.1-9999-exec-1] INFO  c.t.vietqr.service.PvcomBankService.verifyKioskChecksum - Checksum verified successfully for maHoSo: HS001928
+19-06-2026 10:44:23.728 [http-nio-127.0.0.1-9999-exec-1] INFO  c.t.vietqr.service.PvcomBankService.getOrRefreshToken - Fetching a new Access Token from PVcomBank...
+19-06-2026 10:44:24.084 [http-nio-127.0.0.1-9999-exec-1] INFO  c.t.vietqr.service.PvcomBankService.getOrRefreshToken - Access Token retrieved successfully. Expires in 1799 seconds.
+19-06-2026 10:44:24.087 [http-nio-127.0.0.1-9999-exec-1] INFO  c.t.vietqr.service.PvcomBankService.createInvoice - Calling PVcomBank to create invoice: INV17818406640847406
+19-06-2026 10:44:24.091 [http-nio-127.0.0.1-9999-exec-1] INFO  c.t.vietqr.service.PvcomBankService.logCurlCreateInvoice - Equivalent cURL command for testing:
+curl -X POST https://apis-uat.pvcombank.io/external-public/external-public/bill/api/v1/invoices \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6InJzYWtleSIsInR5cCI6ImF0K2p3dCJ9.eyJhdWQiOlsiNjg0MTgxODQ1ZDlmNzQ1ZGMzOGU0NTViMDgxODVkZjQiXSwiY2xpZW50X2lkIjoiNjg0MTgxODQ1ZDlmNzQ1ZGMzOGU0NTViMDgxODVkZjQiLCJleHAiOjE3ODE4NDI0NjUsImdyYW50X2lkIjoiZDRhNWMzMTItOWQ1Ny00NWMwLThhMTUtNGVhOTc4MmE3YzA0IiwiZ3JvdXBzIjpbInN1cHBvcnQiLCJ1c2VyIl0sImlhdCI6MTc4MTg0MDY2NSwiaXNzIjoiaHR0cHM6Ly9hcGlzLXVhdC5wdmNvbWJhbmsuaW8iLCJqdGkiOiIzMzJlODdiZC0xZTc4LTQwNTgtOTlmNi02NmIwNzU5MGM0N2MiLCJuYmYiOjE3ODE4NDA2NjUsInNjb3BlIjoib3BlbmlkIiwic3ViIjoiNjg0MTgxODQ1ZDlmNzQ1ZGMzOGU0NTViMDgxODVkZjQifQ.ZoUoY9eFl-KlfOlYpCodvg-Z04GzW8VdmSCwRSzIK8NQgC_lcjunsnmrl6M06MhSb7V-SqdQeMYx0Ke3nmYO-mytfNk3KzVgPW3vpraiKw1ARmdcbXfZo1UnZ_j-wPN1pZX3qIp5HmVBK2gmRwE-idaZ6OgHwdny3iX7HjbH3yegnzxQ6iItp3veshN-yrSj87Ucc0AZKY---jjb_xW9y8kjF86pudNmLon2TIaBSGh6yOkBUCqzr2jH5klhKeupKbgt3_BYuW0bvYFc9ZLBSUgvm2XtGCoDZDR_abCLJ7HAQrnA3Cx45I_vpiDmWMIkIHgFmmwFfHgIk3qB3nFESw" \
+  -H "client-id: 684181845d9f745dc38e455b08185df4" \
+  -d '{"amount":"100","currency":"VND","invoice_code":"INV17818406640847406","description":"Thanh toan vien phi Ho so HS001928","payment_method":"bank_transfer","payment_method_type":"viet_qr","invoice_expiry_seconds":300,"merchant":{"client_id":"684181845d9f745dc38e455b08185df4","name":"BENH VIEN TINH TAY NINH","account_no":"105003834196"},"customer":{}}'
+19-06-2026 10:44:24.517 [http-nio-127.0.0.1-9999-exec-1] INFO  c.t.vietqr.service.PvcomBankService.createInvoice - PVcomBank createInvoice response: InvoiceResponse(statusCode=00, message=SUCCESS, data=InvoiceData(invoiceCode=INV17818406640847406, status=PENDING, amount=100, currency=VND, alias=301314670979017033, invoiceExpiryTime=2026-06-19 10:49:25.213803, paymentMethod=bank_transfer, nextAction=InvoiceData.NextAction(type=display_qr_code, qrCode=00020101021238620010A0000007270132000697041201183013146709790170330208QRIBFTTA530370454031005802VN62380834Thanh toan vien phi Ho so HS0019286304A102)))
+19-06-2026 10:44:24.552 [http-nio-127.0.0.1-9999-exec-1] INFO  c.t.vietqr.service.PvcomBankService.createInvoice - Saved local invoice record for code: INV17818406640847406
+19-06-2026 10:47:46.642 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+19-06-2026 10:47:46.645 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.

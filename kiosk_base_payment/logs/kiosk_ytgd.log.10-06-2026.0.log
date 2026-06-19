@@ -1,0 +1,151 @@
+10-06-2026 10:14:08.881 [main] INFO  com.tnh.kiosk.KioskApplication.logStarting - Starting KioskApplication using Java 21.0.7 with PID 3352 (D:\Work\APIKIOSK\kiosk\kiosk_bvdk\target\classes started by USER in D:\Work\APIKIOSK\kiosk\kiosk_bvdk)
+10-06-2026 10:14:08.884 [main] INFO  com.tnh.kiosk.KioskApplication.logStartupProfileInfo - The following 4 profiles are active: "kiosk", "qrinfo", "payment", "dev"
+10-06-2026 10:14:10.792 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port 8889 (http)
+10-06-2026 10:14:10.805 [main] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+10-06-2026 10:14:10.805 [main] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/10.1.16]
+10-06-2026 10:14:10.907 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
+10-06-2026 10:14:10.908 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 1974 ms
+10-06-2026 10:14:11.248 [main] DEBUG o.s.jdbc.datasource.DataSourceUtils.doGetConnection - Fetching JDBC Connection from DataSource
+10-06-2026 10:14:11.249 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+10-06-2026 10:14:11.616 [main] INFO  com.zaxxer.hikari.pool.HikariPool.checkFailFast - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 7d7ba27c-e1ca-44b3-bc1b-400a7afd826f
+10-06-2026 10:14:11.617 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+10-06-2026 10:14:13.019 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+10-06-2026 10:14:13.170 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration.getOrDeducePassword - 
+
+Using generated security password: 5faebe94-3e30-4558-bfb0-326337fef6c4
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+10-06-2026 10:14:13.630 [main] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@10b2c1cf, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@20a25f66, org.springframework.security.web.context.SecurityContextHolderFilter@230d013b, org.springframework.security.web.header.HeaderWriterFilter@57617a75, org.springframework.web.filter.CorsFilter@488279d3, org.springframework.security.web.authentication.logout.LogoutFilter@2911db81, com.tnh.kiosk.security.JwtAuthFilter@4f1fb828, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5d84b088, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@69c0bae6, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@27575bcd, org.springframework.security.web.session.SessionManagementFilter@29fc83c5, org.springframework.security.web.access.ExceptionTranslationFilter@141234df, org.springframework.security.web.access.intercept.AuthorizationFilter@1504b493]
+10-06-2026 10:14:13.950 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port 8889 (http) with context path ''
+10-06-2026 10:14:13.956 [main] INFO  com.tnh.kiosk.KioskApplication.logStarted - Started KioskApplication in 5.826 seconds (process running for 6.42)
+10-06-2026 10:14:13.959 [main] INFO  com.tnh.kiosk.KioskApplication.logApplicationStartup - ----------------------------------------------------------
+	Application 'tnh-kios-api' is running! Access URLs:
+	Local: 	http://localhost:8889/
+	External: 	http://localhost:8889/
+	Profile(s): 	[kiosk, qrinfo, payment, dev]
+	Startup time: 2ms
+	JVM Version: 21.0.7
+----------------------------------------------------------
+10-06-2026 10:14:38.719 [http-nio-127.0.0.1-8889-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
+10-06-2026 10:14:38.719 [http-nio-127.0.0.1-8889-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
+10-06-2026 10:14:38.720 [http-nio-127.0.0.1-8889-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 1 ms
+10-06-2026 10:14:38.729 [http-nio-127.0.0.1-8889-exec-1] WARN  o.s.w.s.h.HandlerMappingIntrospector.logCacheMiss - Cache miss for REQUEST dispatch to '/api/v1/authen/login' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+10-06-2026 10:14:38.740 [http-nio-127.0.0.1-8889-exec-1] WARN  o.s.w.s.h.HandlerMappingIntrospector.logCacheMiss - Cache miss for REQUEST dispatch to '/api/v1/authen/login' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+10-06-2026 10:16:11.408 [http-nio-127.0.0.1-8889-exec-3] INFO  com.tnh.kiosk.services.KioskService.executeProcedure - Executing stored procedure with key: get-tiepnhan-cv and params: {SO_THE_BHYT=LH2807221719247}
+10-06-2026 10:16:30.953 [http-nio-127.0.0.1-8889-exec-4] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver.logException - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public java.util.Map<java.lang.String, java.lang.Object> com.tnh.kiosk.controllers.KioskController.getTiepNhanCv(java.util.Map<java.lang.String, java.lang.Object>)]
+10-06-2026 10:16:53.986 [http-nio-127.0.0.1-8889-exec-5] INFO  com.tnh.kiosk.services.KioskService.executeProcedure - Executing stored procedure with key: get-tiepnhan-cv and params: {SO_THE_BHYT=LH2807221719247}
+10-06-2026 10:17:36.701 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+10-06-2026 10:17:36.705 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
+10-06-2026 14:17:28.953 [main] INFO  com.tnh.kiosk.KioskApplication.logStarting - Starting KioskApplication using Java 21.0.7 with PID 460 (D:\Work\APIKIOSK\kiosk\kiosk_bvdk - pvbank\target\classes started by USER in D:\Work\APIKIOSK\kiosk\kiosk_bvdk - pvbank)
+10-06-2026 14:17:28.960 [main] INFO  com.tnh.kiosk.KioskApplication.logStartupProfileInfo - The following 4 profiles are active: "kiosk", "qrinfo", "payment", "dev"
+10-06-2026 14:17:30.249 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port 8989 (http)
+10-06-2026 14:17:30.258 [main] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+10-06-2026 14:17:30.259 [main] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/10.1.16]
+10-06-2026 14:17:30.313 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
+10-06-2026 14:17:30.313 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 1312 ms
+10-06-2026 14:17:30.528 [main] DEBUG o.s.jdbc.datasource.DataSourceUtils.doGetConnection - Fetching JDBC Connection from DataSource
+10-06-2026 14:17:30.529 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+10-06-2026 14:17:30.889 [main] INFO  com.zaxxer.hikari.pool.HikariPool.checkFailFast - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 0eed8fed-1473-4d43-8a77-3dce3c1b6a86
+10-06-2026 14:17:30.891 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+10-06-2026 14:17:32.037 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+10-06-2026 14:17:32.136 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration.getOrDeducePassword - 
+
+Using generated security password: 455b7b70-ee8f-4385-8bef-58eba07a877e
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+10-06-2026 14:17:32.348 [main] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7872e91f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@10b2c1cf, org.springframework.security.web.context.SecurityContextHolderFilter@7c39193f, org.springframework.security.web.header.HeaderWriterFilter@65698020, org.springframework.web.filter.CorsFilter@20a25f66, org.springframework.security.web.authentication.logout.LogoutFilter@4edde05c, com.tnh.kiosk.security.JwtAuthFilter@6ee5f485, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6e225c34, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5d84b088, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@488279d3, org.springframework.security.web.session.SessionManagementFilter@1fc8047f, org.springframework.security.web.access.ExceptionTranslationFilter@700202fa, org.springframework.security.web.access.intercept.AuthorizationFilter@5c1687d1]
+10-06-2026 14:17:32.651 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext.refresh - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+10-06-2026 14:17:32.655 [main] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+10-06-2026 14:17:32.659 [main] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
+10-06-2026 14:17:32.673 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger.logMessage - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+10-06-2026 14:17:32.688 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter.report - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8989 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8989 or configure this application to listen on another port.
+
+10-06-2026 14:17:51.949 [main] INFO  com.tnh.kiosk.KioskApplication.logStarting - Starting KioskApplication using Java 21.0.7 with PID 19028 (D:\Work\APIKIOSK\kiosk\kiosk_bvdk - pvbank\target\classes started by USER in D:\Work\APIKIOSK\kiosk\kiosk_bvdk - pvbank)
+10-06-2026 14:17:51.951 [main] INFO  com.tnh.kiosk.KioskApplication.logStartupProfileInfo - The following 4 profiles are active: "kiosk", "qrinfo", "payment", "dev"
+10-06-2026 14:17:53.095 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port 8999 (http)
+10-06-2026 14:17:53.112 [main] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+10-06-2026 14:17:53.112 [main] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/10.1.16]
+10-06-2026 14:17:53.156 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
+10-06-2026 14:17:53.157 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 1167 ms
+10-06-2026 14:17:53.396 [main] DEBUG o.s.jdbc.datasource.DataSourceUtils.doGetConnection - Fetching JDBC Connection from DataSource
+10-06-2026 14:17:53.397 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+10-06-2026 14:17:53.691 [main] INFO  com.zaxxer.hikari.pool.HikariPool.checkFailFast - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: ab6513c3-8fc7-4d62-bf05-97e22f88db9d
+10-06-2026 14:17:53.693 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+10-06-2026 14:17:54.502 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+10-06-2026 14:17:54.554 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration.getOrDeducePassword - 
+
+Using generated security password: 286b1257-221c-4bdc-be46-c9aa0a090c23
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+10-06-2026 14:17:54.757 [main] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5862dda4, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@299ddfff, org.springframework.security.web.context.SecurityContextHolderFilter@670ae31f, org.springframework.security.web.header.HeaderWriterFilter@530df3ab, org.springframework.web.filter.CorsFilter@fe09374, org.springframework.security.web.authentication.logout.LogoutFilter@46290193, com.tnh.kiosk.security.JwtAuthFilter@6c538eb2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@129aaac1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3370be55, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5e02fb23, org.springframework.security.web.session.SessionManagementFilter@73a1a1b4, org.springframework.security.web.access.ExceptionTranslationFilter@43b2e7db, org.springframework.security.web.access.intercept.AuthorizationFilter@51b41740]
+10-06-2026 14:17:55.027 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port 8999 (http) with context path ''
+10-06-2026 14:17:55.033 [main] INFO  com.tnh.kiosk.KioskApplication.logStarted - Started KioskApplication in 3.575 seconds (process running for 3.876)
+10-06-2026 14:17:55.035 [main] INFO  com.tnh.kiosk.KioskApplication.logApplicationStartup - ----------------------------------------------------------
+	Application 'tnh-kios-api' is running! Access URLs:
+	Local: 	http://localhost:8999/
+	External: 	http://localhost:8999/
+	Profile(s): 	[kiosk, qrinfo, payment, dev]
+	Startup time: 0ms
+	JVM Version: 21.0.7
+----------------------------------------------------------
+10-06-2026 14:18:19.961 [http-nio-127.0.0.1-8999-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
+10-06-2026 14:18:19.961 [http-nio-127.0.0.1-8999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
+10-06-2026 14:18:19.962 [http-nio-127.0.0.1-8999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 1 ms
+10-06-2026 14:18:19.970 [http-nio-127.0.0.1-8999-exec-1] WARN  o.s.w.s.h.HandlerMappingIntrospector.logCacheMiss - Cache miss for REQUEST dispatch to '/api/v1/authen/login' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+10-06-2026 14:18:19.981 [http-nio-127.0.0.1-8999-exec-1] WARN  o.s.w.s.h.HandlerMappingIntrospector.logCacheMiss - Cache miss for REQUEST dispatch to '/api/v1/authen/login' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+10-06-2026 14:19:01.778 [http-nio-127.0.0.1-8999-exec-2] INFO  com.tnh.kiosk.services.KioskService.executeProcedure - Executing stored procedure with key: get-pvcom-test and params: {}
+10-06-2026 14:20:34.936 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+10-06-2026 14:20:34.940 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
+10-06-2026 14:20:46.209 [main] INFO  com.tnh.kiosk.KioskApplication.logStarting - Starting KioskApplication using Java 21.0.7 with PID 14104 (D:\Work\APIKIOSK\kiosk\kiosk_bvdk - pvbank\target\classes started by USER in D:\Work\APIKIOSK\kiosk\kiosk_bvdk - pvbank)
+10-06-2026 14:20:46.210 [main] INFO  com.tnh.kiosk.KioskApplication.logStartupProfileInfo - The following 4 profiles are active: "kiosk", "qrinfo", "payment", "dev"
+10-06-2026 14:20:47.396 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port 8999 (http)
+10-06-2026 14:20:47.415 [main] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+10-06-2026 14:20:47.415 [main] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/10.1.16]
+10-06-2026 14:20:47.470 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
+10-06-2026 14:20:47.471 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 1214 ms
+10-06-2026 14:20:47.686 [main] DEBUG o.s.jdbc.datasource.DataSourceUtils.doGetConnection - Fetching JDBC Connection from DataSource
+10-06-2026 14:20:47.687 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+10-06-2026 14:20:47.955 [main] INFO  com.zaxxer.hikari.pool.HikariPool.checkFailFast - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 4d036c41-96c7-4d3b-b479-30e2ae0f6642
+10-06-2026 14:20:47.957 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+10-06-2026 14:20:48.775 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+10-06-2026 14:20:48.834 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration.getOrDeducePassword - 
+
+Using generated security password: e6f7b477-db81-4a29-a1e8-b50d23592066
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+10-06-2026 14:20:49.069 [main] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@21ed4a51, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@13866865, org.springframework.security.web.context.SecurityContextHolderFilter@220f6a3c, org.springframework.security.web.header.HeaderWriterFilter@470a446f, org.springframework.web.filter.CorsFilter@4891d727, org.springframework.security.web.authentication.logout.LogoutFilter@57a0c261, com.tnh.kiosk.security.JwtAuthFilter@ccd341d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2648aa1b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4a3333be, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@550574cb, org.springframework.security.web.session.SessionManagementFilter@6e225c34, org.springframework.security.web.access.ExceptionTranslationFilter@3225d950, org.springframework.security.web.access.intercept.AuthorizationFilter@20a25f66]
+10-06-2026 14:20:49.345 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port 8999 (http) with context path ''
+10-06-2026 14:20:49.351 [main] INFO  com.tnh.kiosk.KioskApplication.logStarted - Started KioskApplication in 3.724 seconds (process running for 4.031)
+10-06-2026 14:20:49.353 [main] INFO  com.tnh.kiosk.KioskApplication.logApplicationStartup - ----------------------------------------------------------
+	Application 'tnh-kios-api' is running! Access URLs:
+	Local: 	http://localhost:8999/
+	External: 	http://localhost:8999/
+	Profile(s): 	[kiosk, qrinfo, payment, dev]
+	Startup time: 0ms
+	JVM Version: 21.0.7
+----------------------------------------------------------
+10-06-2026 14:20:55.496 [http-nio-127.0.0.1-8999-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
+10-06-2026 14:20:55.496 [http-nio-127.0.0.1-8999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
+10-06-2026 14:20:55.498 [http-nio-127.0.0.1-8999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 1 ms
+10-06-2026 14:20:55.506 [http-nio-127.0.0.1-8999-exec-1] WARN  o.s.w.s.h.HandlerMappingIntrospector.logCacheMiss - Cache miss for REQUEST dispatch to '/api/v1/authen/login' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+10-06-2026 14:20:55.515 [http-nio-127.0.0.1-8999-exec-1] WARN  o.s.w.s.h.HandlerMappingIntrospector.logCacheMiss - Cache miss for REQUEST dispatch to '/api/v1/authen/login' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+10-06-2026 14:30:43.154 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+10-06-2026 14:30:43.158 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.

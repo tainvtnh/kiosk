@@ -1,0 +1,1330 @@
+openapi: "3.0.3"
+
+info:
+  title: Dịch vụ thu hộ VietQR — PVcomBank
+  version: "1.0.0"
+  description: |
+    ## Giới thiệu
+
+    API tích hợp dịch vụ thu hộ VietQR của PVcomBank cho phép đối tác (ĐVCNTT) tạo và quản lý
+    hóa đơn thanh toán. Khách hàng quét mã QR chuẩn VietQR bằng ứng dụng ngân hàng bất kỳ để
+    thanh toán. Kết quả thanh toán được thông báo về hệ thống đối tác qua IPN callback.
+
+    ---
+
+    ## Môi trường
+
+    | Môi trường | Base URL |
+    |---|---|
+    | UAT (test) | `https://apis-uat.pvcombank.io` |
+    | Production | `https://apis-prod.pvcombank.io` |
+
+    > Tất cả API (lấy token, tạo hóa đơn, truy vấn giao dịch) đều dùng chung một domain.
+    > Khi chuyển lên Production, chỉ cần đổi domain — path và cấu trúc request/response giữ nguyên.
+
+    ---
+
+    ## Luồng tích hợp tổng quan
+
+    **Bước 1 — Lấy Access Token**: Gọi `POST /idp/oauth2/token` với `client_id` và `client_secret`
+    do PVcomBank cấp. Token có hiệu lực 1 giờ, nên cache và tái sử dụng.
+
+    **Bước 2 — Tạo hóa đơn**: Gọi `POST /external-public/external-public/bill/api/v1/invoices`
+    với Bearer Token. API trả về `qr_code` (chuỗi VietQR) và `alias` (số tài khoản ảo).
+
+    **Bước 3 — Hiển thị QR**: Render chuỗi `qr_code` thành ảnh QR và hiển thị cho khách hàng.
+
+    **Bước 4 — Khách hàng thanh toán**: Khách hàng quét QR bằng app ngân hàng và xác nhận thanh toán.
+
+    **Bước 5 — Nhận IPN**: PVcomBank gọi POST đến URL IPN của ĐVCNTT khi thanh toán thành công.
+    ĐVCNTT verify chữ ký và cập nhật trạng thái đơn hàng.
+
+    **Bước 6 — Truy vấn giao dịch** (tùy chọn): Dùng `POST /external-public/external-public/notifications/api/v1/transactions`
+    để chủ động tra cứu kết quả giao dịch theo mã hóa đơn.
+
+    ---
+
+    ## Xác thực
+
+    Tích hợp sử dụng **hai lớp xác thực** cho Invoice API:
+
+    ### Lớp 1 — OAuth2 Bearer Token
+    - Lấy token từ `POST /idp/oauth2/token` bằng `client_id` + `client_secret`
+    - Truyền qua header: `Authorization: Bearer <access_token>`
+    - Token hết hạn sau `expires_in` giây (thường 3600s = 1 giờ)
+    - Nên cache token và làm mới trước khi hết hạn ~5 phút
+
+    ### Lớp 2 — client-id Header
+    - Truyền qua header: `client-id: <your_client_id>`
+    - Giá trị phải **khớp chính xác** với `merchant.client_id` trong body request
+    - Nếu không khớp → lỗi `statusCode: "05"` (Client ID invalid)
+
+    ---
+
+    ## Quy tắc chung về Response
+
+    > **Quan trọng**: Tất cả API đều trả về **HTTP 200** cho mọi trường hợp, kể cả lỗi nghiệp vụ.
+    > ĐVCNTT phải kiểm tra trường `statusCode` trong body để xác định kết quả thực sự.
+
+    ```json
+    {
+      "statusCode": "00",   ← "00" = thành công, khác "00" = lỗi
+      "message": "SUCCESS",
+      "data": { ... }
+    }
+    ```
+
+    ### Bảng mã lỗi tổng hợp
+
+    | statusCode | message | Nhóm | Mô tả | Hướng xử lý |
+    |---|---|---|---|---|
+    | `00` | `SUCCESS` | Thành công | Xử lý thành công | Tiếp tục luồng nghiệp vụ |
+    | `01` | `Client ID not found` | Xác thực | `client-id` header không tồn tại trong hệ thống | Kiểm tra lại `client-id` được cấp |
+    | `02` | `Account not found` | Xác thực | `merchant.account_no` không tìm thấy | Kiểm tra số tài khoản; liên hệ PVcomBank |
+    | `03` | `Order ID not found` | Nghiệp vụ | `invoice_code` không tồn tại (dùng cho update/query) | Kiểm tra lại `invoice_code` |
+    | `04` | `Type not found` | Nghiệp vụ | `payment_method_type` không phải `"viet_qr"` | Chỉ dùng `"viet_qr"` |
+    | `05` | `Client ID invalid` | Xác thực | `client-id` header không khớp với `merchant.client_id` trong body | Đảm bảo hai giá trị giống nhau |
+    | `06` | `System error` | Hệ thống | Lỗi nội bộ PVcomBank | Thử lại sau; liên hệ PVcomBank nếu kéo dài |
+    | `07` | `VA Invalid` | Nghiệp vụ | `alias` (Virtual Account) không hợp lệ | Kiểm tra `alias` từ response tạo hóa đơn |
+    | `08` | `Amount Invalid` | Nghiệp vụ | `amount` chứa ký tự không hợp lệ | Chỉ dùng chữ số nguyên dương, ví dụ `"150000"` |
+    | `09` | `Invoice invalid` | Nghiệp vụ | Hóa đơn không tồn tại hoặc không ở trạng thái `PENDING` | Kiểm tra trạng thái hóa đơn |
+    | `30` | `MESSAGE_FORMAT_ERROR` | Xác thực | Request body sai schema (thiếu trường, sai kiểu) | Kiểm tra lại cấu trúc request |
+
+    ---
+
+    ## Vòng đời hóa đơn
+
+    | Trạng thái | Mô tả |
+    |---|---|
+    | `PENDING` | Hóa đơn vừa tạo, đang chờ thanh toán |
+    | `POSTING` | Core Banking đang xử lý giao dịch |
+    | `PAID` | Thanh toán thành công |
+    | `EXPIRED` | Hóa đơn hết hạn (tự động hoặc do ĐVCNTT hủy) |
+    | `CANCELLED` | Hóa đơn bị hủy (dự phòng tương lai) |
+    | `FAILED` | Giao dịch thất bại do lỗi không xác định |
+
+  contact:
+    name: PVcomBank Integration Support
+    email: integration@pvcombank.com.vn
+
+servers:
+  - url: https://apis-uat.pvcombank.io
+    description: UAT — Môi trường kiểm thử tích hợp
+  - url: https://apis-prod.pvcombank.io
+    description: Production — Môi trường vận hành thực tế
+
+security:
+  - BearerAuth: []
+  - ClientIdAuth: []
+
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Access Token lấy từ `POST /idp/oauth2/token` bằng OAuth2 Client Credentials flow.
+        Truyền qua header: `Authorization: Bearer <access_token>`.
+        Token hết hạn sau `expires_in` giây — nên cache và làm mới trước khi hết hạn.
+
+    ClientIdAuth:
+      type: apiKey
+      in: header
+      name: client-id
+      description: |
+        Mã định danh Merchant do PVcomBank cấp khi onboarding.
+        Phải khớp chính xác với `merchant.client_id` trong body request.
+        Nếu không khớp → lỗi `statusCode: "05"`.
+
+  schemas:
+
+    # ─────────────────────────────────────────────
+    # AUTHENTICATION
+    # ─────────────────────────────────────────────
+
+    TokenRequest:
+      type: object
+      description: |
+        Tham số lấy Access Token theo OAuth2 Client Credentials flow.
+        Gửi dưới dạng `application/x-www-form-urlencoded` (không phải JSON).
+      required: [client_id, client_secret, scope, grant_type]
+      properties:
+        client_id:
+          type: string
+          description: Client ID do PVcomBank cấp cho ĐVCNTT khi onboarding.
+          example: "a67246e5b10fcac6851299ee51602818"
+        client_secret:
+          type: string
+          description: |
+            Client Secret do PVcomBank cấp. Bảo mật tuyệt đối — không nhúng vào
+            client-side code, không commit lên source control.
+          example: "59a08617d57094a7474ed90a1fb5658f"
+        scope:
+          type: string
+          description: Phạm vi quyền truy cập. Luôn dùng `openid`.
+          enum: [openid]
+          example: "openid"
+        grant_type:
+          type: string
+          description: Loại grant OAuth2. Luôn dùng `client_credentials` cho tích hợp server-to-server.
+          enum: [client_credentials]
+          example: "client_credentials"
+
+    TokenResponse:
+      type: object
+      description: Access Token trả về sau khi xác thực thành công.
+      properties:
+        access_token:
+          type: string
+          description: |
+            JWT Access Token dùng để xác thực các request tới Invoice API.
+            Truyền qua header: `Authorization: Bearer <access_token>`.
+          example: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+        token_type:
+          type: string
+          description: Loại token. Luôn là `Bearer`.
+          example: "Bearer"
+        expires_in:
+          type: integer
+          description: Thời gian hiệu lực tính bằng giây. Thường là 3600 (1 giờ).
+          example: 3600
+        scope:
+          type: string
+          description: Phạm vi quyền truy cập được cấp.
+          example: "openid"
+
+    # ─────────────────────────────────────────────
+    # INVOICE REQUEST / RESPONSE
+    # ─────────────────────────────────────────────
+
+    MerchantInfo:
+      type: object
+      description: Thông tin Merchant thực hiện giao dịch.
+      required: [client_id, name, account_no]
+      additionalProperties: false
+      properties:
+        client_id:
+          type: string
+          maxLength: 64
+          description: |
+            Mã định danh Merchant do PVcomBank cấp.
+            **Phải khớp chính xác với header `client-id`** — nếu không khớp → lỗi `statusCode: "05"`.
+          example: "MERCHANT_001"
+        name:
+          type: string
+          maxLength: 140
+          description: Tên hiển thị của Merchant.
+          example: "Công ty TNHH ABC"
+        account_no:
+          type: string
+          maxLength: 34
+          description: |
+            Số tài khoản ngân hàng của Merchant tại PVcomBank nhận tiền thanh toán.
+            Nếu không tìm thấy → lỗi `statusCode: "02"`.
+          example: "0123456789012"
+
+    MerchantInfoUpdate:
+      type: object
+      description: Thông tin Merchant dùng khi cập nhật / hủy hóa đơn.
+      required: [client_id, account_no]
+      additionalProperties: false
+      properties:
+        client_id:
+          type: string
+          maxLength: 64
+          description: Mã định danh Merchant. Phải khớp với header `client-id`.
+          example: "MERCHANT_001"
+        name:
+          type: string
+          maxLength: 140
+          description: Tên Merchant (tùy chọn khi cập nhật).
+          example: "Công ty TNHH ABC"
+        account_no:
+          type: string
+          maxLength: 34
+          description: Số tài khoản ngân hàng của Merchant tại PVcomBank.
+          example: "0123456789012"
+
+    CustomerInfo:
+      type: object
+      description: Thông tin khách hàng thanh toán (tùy chọn, dùng để lưu thông tin đối soát).
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          maxLength: 140
+          description: Tên khách hàng.
+          example: "Nguyễn Văn A"
+        email:
+          type: string
+          format: email
+          description: Địa chỉ email của khách hàng.
+          example: "nguyenvana@example.com"
+
+    InvoiceRequest:
+      type: object
+      description: |
+        Dữ liệu tạo hóa đơn thanh toán mới.
+
+        **Lưu ý quan trọng**:
+        - `invoice_code` phải **duy nhất toàn hệ thống** — nếu trùng → lỗi `statusCode: "30"`
+        - `amount` chỉ chứa chữ số nguyên dương, không dấu phẩy/chấm — nếu sai → lỗi `statusCode: "08"`
+        - `payment_method_type` chỉ chấp nhận `"viet_qr"` — nếu sai → lỗi `statusCode: "04"`
+      required: [amount, currency, invoice_code, description, payment_method, payment_method_type, merchant]
+      additionalProperties: false
+      properties:
+        amount:
+          type: string
+          pattern: "^[0-9]+$"
+          description: |
+            Số tiền thanh toán (đơn vị: đồng VND).
+            Chỉ chứa chữ số, không dấu phẩy hoặc dấu chấm.
+            Ví dụ đúng: `"150000"` (150.000đ). Sai: `"150,000"` hoặc `"150.000"`.
+          example: "150000"
+        currency:
+          type: string
+          minLength: 3
+          maxLength: 3
+          pattern: "^[A-Z]{3}$"
+          description: Mã tiền tệ theo chuẩn ISO 4217. Hiện chỉ hỗ trợ `VND`.
+          example: "VND"
+        invoice_code:
+          type: string
+          minLength: 10
+          maxLength: 32
+          description: |
+            Mã hóa đơn duy nhất do ĐVCNTT tự sinh. Phải duy nhất trong toàn hệ thống PVcomBank.
+            Độ dài 10–32 ký tự. Khuyến nghị dùng prefix + timestamp/UUID để đảm bảo tính duy nhất.
+            Ví dụ: `"MERCHANT001-20240501-001"`, `"INV-1714550400-A3F2"`.
+          example: "INV2024050001"
+        description:
+          type: string
+          maxLength: 255
+          description: Nội dung thanh toán hiển thị trên mã QR. Tối đa 255 ký tự.
+          example: "Thanh toán đơn hàng #ORD-2024-001"
+        payment_method:
+          type: string
+          enum: [bank_transfer]
+          description: Phương thức thanh toán. Hiện chỉ hỗ trợ `bank_transfer`.
+          example: "bank_transfer"
+        payment_method_type:
+          type: string
+          enum: [viet_qr]
+          description: |
+            Loại phương thức thanh toán. Hiện chỉ hỗ trợ `"viet_qr"`.
+            Nếu truyền giá trị khác (kể cả `"VIET_QR"` viết hoa) → lỗi `statusCode: "04"`.
+          example: "viet_qr"
+        invoice_expiry_seconds:
+          type: integer
+          minimum: 1
+          maximum: 2592000
+          nullable: true
+          description: |
+            Thời gian hiệu lực của hóa đơn tính bằng giây (tối đa 30 ngày = 2.592.000 giây).
+            - Không truyền hoặc `null`: hóa đơn không tự động hết hạn
+            - Truyền giá trị: hóa đơn tự động chuyển sang `EXPIRED` sau đúng số giây đó
+            - Khi hết hạn, khách hàng không thể thanh toán bằng QR đó nữa
+          example: 300
+        merchant:
+          $ref: "#/components/schemas/MerchantInfo"
+        customer:
+          $ref: "#/components/schemas/CustomerInfo"
+
+    UpdateInvoiceRequest:
+      type: object
+      description: |
+        Dữ liệu cập nhật hoặc hủy hóa đơn.
+
+        **Điều kiện**: Chỉ có thể hủy hóa đơn đang ở trạng thái `PENDING`.
+        Hóa đơn đã `PAID`, `EXPIRED`, `CANCELLED`, `FAILED` → lỗi `statusCode: "09"`.
+      required: [alias, invoice_code, force_expire_now, merchant]
+      additionalProperties: false
+      properties:
+        alias:
+          type: string
+          minLength: 17
+          maxLength: 20
+          pattern: "^[0-9]+$"
+          description: |
+            Số tài khoản ảo (Virtual Account) được gán cho hóa đơn khi tạo.
+            Lấy từ trường `data.alias` trong response của API tạo hóa đơn.
+            Chỉ chứa chữ số, độ dài 17–20 ký tự.
+          example: "99901234567890123"
+        invoice_code:
+          type: string
+          minLength: 10
+          maxLength: 32
+          description: Mã hóa đơn cần cập nhật. Phải khớp với hóa đơn đã tạo trước đó.
+          example: "INV2024050001"
+        force_expire_now:
+          type: boolean
+          description: |
+            Nếu `true`, hóa đơn bị hủy ngay lập tức (chuyển sang trạng thái `EXPIRED`).
+            Chỉ áp dụng cho hóa đơn đang ở trạng thái `PENDING`.
+          example: true
+        merchant:
+          $ref: "#/components/schemas/MerchantInfoUpdate"
+
+    NextAction:
+      type: object
+      description: |
+        Hành động tiếp theo ĐVCNTT cần thực hiện sau khi tạo hóa đơn thành công.
+        Luôn là hiển thị mã QR cho khách hàng quét.
+      properties:
+        type:
+          type: string
+          description: Loại hành động. Luôn là `"qr_code"`.
+          example: "qr_code"
+        qr_code:
+          type: string
+          description: |
+            Chuỗi dữ liệu QR theo chuẩn **EMVCo / NAPAS VietQR** (định dạng TLV).
+            ĐVCNTT render chuỗi này thành ảnh QR để khách hàng quét bằng app ngân hàng.
+
+            **Cách render (JavaScript)**:
+            ```javascript
+            import QRCode from 'qrcode';
+            const dataUrl = await QRCode.toDataURL(response.data.next_action.qr_code, { width: 300 });
+            document.getElementById('qr-img').src = dataUrl;
+            ```
+
+            **Cách render (Java — ZXing)**:
+            ```java
+            BitMatrix matrix = new QRCodeWriter().encode(qrCode, BarcodeFormat.QR_CODE, 300, 300);
+            MatrixToImageWriter.writeToPath(matrix, "PNG", Paths.get("qr.png"));
+            ```
+
+            Kích thước tối thiểu: 200×200 px. Không biến đổi chuỗi trước khi render.
+          example: "00020101021238570010A000000727012700069704220113099012345678900208QRIBFTTA53037045802VN5915Cong ty TNHH ABC6005Hanoi62200816INV20240500016304ABCD"
+
+    InvoiceData:
+      type: object
+      description: Thông tin hóa đơn trả về sau khi tạo thành công.
+      properties:
+        invoice_code:
+          type: string
+          description: Mã hóa đơn (giống với giá trị đã gửi trong request).
+          example: "INV2024050001"
+        status:
+          type: string
+          enum: [PENDING, POSTING, PAID, EXPIRED, CANCELLED, FAILED]
+          description: Trạng thái hóa đơn. Luôn là `PENDING` ngay sau khi tạo thành công.
+          example: "PENDING"
+        amount:
+          type: string
+          description: Số tiền thanh toán.
+          example: "150000"
+        currency:
+          type: string
+          description: Mã tiền tệ.
+          example: "VND"
+        alias:
+          type: string
+          description: |
+            Số tài khoản ảo (Virtual Account) được gán cho hóa đơn này.
+            **Lưu lại giá trị này** — cần dùng khi gọi API hủy hóa đơn.
+          example: "99901234567890123"
+        invoice_expiry_time:
+          type: string
+          format: date-time
+          nullable: true
+          description: Thời điểm hóa đơn hết hạn (ISO 8601). `null` nếu không đặt thời hạn.
+          example: "2024-05-01T10:05:00+07:00"
+        payment_method:
+          type: string
+          description: Phương thức thanh toán.
+          example: "bank_transfer"
+        next_action:
+          $ref: "#/components/schemas/NextAction"
+
+    InvoiceResponse:
+      type: object
+      description: Response thành công khi tạo hóa đơn.
+      properties:
+        statusCode:
+          type: string
+          description: "`\"00\"` = thành công."
+          example: "00"
+        message:
+          type: string
+          example: "SUCCESS"
+        data:
+          $ref: "#/components/schemas/InvoiceData"
+
+    UpdateInvoiceData:
+      type: object
+      description: Thông tin hóa đơn sau khi cập nhật.
+      properties:
+        invoice_code:
+          type: string
+          description: Mã hóa đơn đã cập nhật.
+          example: "INV2024050001"
+        status:
+          type: string
+          enum: [PENDING, POSTING, PAID, EXPIRED, CANCELLED, FAILED]
+          description: Trạng thái mới. Sau `force_expire_now=true` → `EXPIRED`.
+          example: "EXPIRED"
+        alias:
+          type: string
+          description: Số tài khoản ảo của hóa đơn.
+          example: "99901234567890123"
+
+    UpdateInvoiceResponse:
+      type: object
+      description: Response thành công khi cập nhật / hủy hóa đơn.
+      properties:
+        statusCode:
+          type: string
+          description: "`\"00\"` = thành công."
+          example: "00"
+        message:
+          type: string
+          example: "SUCCESS"
+        data:
+          $ref: "#/components/schemas/UpdateInvoiceData"
+
+    # ─────────────────────────────────────────────
+    # TRANSACTION QUERY
+    # ─────────────────────────────────────────────
+
+    TransactionQueryRequest:
+      type: object
+      description: |
+        Tham số truy vấn giao dịch thanh toán theo mã hóa đơn.
+        Dùng để chủ động kiểm tra kết quả giao dịch khi chưa nhận được IPN.
+      required: [account, orderId, clientId]
+      properties:
+        account:
+          type: integer
+          description: Số tài khoản của Merchant tại PVcomBank (dạng số nguyên).
+          example: 123388
+        orderId:
+          type: string
+          description: |
+            Mã hóa đơn cần truy vấn (bao gồm format đầy đủ).
+            Phải khớp với `invoice_code` đã dùng khi tạo hóa đơn.
+          example: "HD000000016TTBVIDTNH"
+        clientId:
+          type: string
+          description: OAuth2 Client ID của Merchant do PVcomBank cấp.
+          example: "a67246e5b10fcac6851299ee51602818"
+
+    TransactionData:
+      type: object
+      description: Thông tin giao dịch thanh toán.
+      properties:
+        account:
+          type: string
+          minLength: 5
+          maxLength: 20
+          description: Số tài khoản của Merchant.
+          example: "123388"
+        currency:
+          type: string
+          minLength: 1
+          maxLength: 10
+          description: Đơn vị tiền tệ. Mặc định là VND.
+          example: "VND"
+        amount:
+          type: string
+          minLength: 1
+          maxLength: 20
+          description: Số tiền thanh toán.
+          example: "150000"
+        tranDate:
+          type: string
+          minLength: 1
+          maxLength: 20
+          description: Thời gian giao dịch.
+          example: "2024-05-01 10:03:45.123456"
+        tranId:
+          type: string
+          minLength: 1
+          maxLength: 40
+          description: ID giao dịch duy nhất. Dùng để đối soát với Core Banking.
+          example: "FT24120112345678"
+        description:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Mã hóa đơn (bao gồm format) — nội dung chuyển khoản.
+          example: "HD000000016TTBVIDTNH"
+
+    TransactionQueryResponse:
+      type: object
+      description: Kết quả truy vấn giao dịch.
+      properties:
+        statusCode:
+          type: string
+          description: "`\"00\"` = thành công."
+          example: "00"
+        message:
+          type: string
+          example: "SUCCESS"
+        data:
+          $ref: "#/components/schemas/TransactionData"
+
+    # ─────────────────────────────────────────────
+    # IPN SCHEMAS
+    # ─────────────────────────────────────────────
+
+    IpnPayload:
+      type: object
+      description: |
+        Payload PVcomBank POST đến URL IPN của ĐVCNTT khi có biến động số dư (thanh toán thành công).
+
+        **ĐVCNTT phải verify chữ ký trước khi xử lý nghiệp vụ.**
+
+        Quy trình xử lý:
+        1. Nhận payload JSON
+        2. Tạo chuỗi ký: `msg = tranId + account + currency + amount + tranDate + description`
+        3. Verify `signature` bằng Public Key PVcomBank cấp (SHA512WithRSA)
+        4. Nếu hợp lệ: xử lý nghiệp vụ, trả về `verify_signature: "true"`
+        5. Nếu không hợp lệ: trả về `verify_signature: "false"`, không xử lý
+      required: [data, signature]
+      properties:
+        data:
+          $ref: "#/components/schemas/IpnData"
+        signature:
+          type: string
+          minLength: 1
+          maxLength: 3000
+          description: |
+            Chữ ký số PVcomBank tạo bằng SHA512WithRSA.
+            Chuỗi ký: `tranId + account + currency + amount + tranDate + description`
+            (ghép trực tiếp, không có dấu phân cách).
+          example: "base64encodedSHA512WithRSASignature..."
+
+    IpnData:
+      type: object
+      description: Dữ liệu biến động số dư trong IPN payload.
+      required: [account, currency, amount, tranDate, tranId, description]
+      properties:
+        account:
+          type: string
+          minLength: 5
+          maxLength: 20
+          description: Số tài khoản của Merchant nhận tiền.
+          example: "103000817212"
+        va:
+          type: string
+          minLength: 5
+          maxLength: 30
+          description: Số tài khoản ảo (Virtual Account) nếu có.
+          example: "VA72364734"
+        currency:
+          type: string
+          minLength: 1
+          maxLength: 10
+          description: Đơn vị tiền tệ. Mặc định là VND.
+          example: "VND"
+        amount:
+          type: string
+          minLength: 1
+          maxLength: 20
+          description: Số tiền thanh toán.
+          example: "18000"
+        tranDate:
+          type: string
+          minLength: 1
+          maxLength: 20
+          description: Thời gian giao dịch.
+          example: "2024-11-03 11:24:24.997757"
+        tranId:
+          type: string
+          minLength: 1
+          maxLength: 40
+          description: |
+            ID giao dịch duy nhất. Dùng để đối soát và xử lý idempotency
+            (lưu lại `tranId` đã xử lý để tránh xử lý trùng khi PVcomBank retry).
+          example: "FT21242FK3NK"
+        description:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Mã hóa đơn (bao gồm format) — dùng để map về đơn hàng trong hệ thống ĐVCNTT.
+          example: "HD123456789TTBV"
+
+    IpnResponse:
+      type: object
+      description: |
+        Response ĐVCNTT trả về cho PVcomBank sau khi nhận IPN.
+        PVcomBank lưu log toàn bộ response này.
+      required: [data, verify_signature]
+      properties:
+        data:
+          type: object
+          description: Dữ liệu tùy ý ĐVCNTT muốn truyền lại. PVcomBank lưu log.
+          example: { "orderId": "HD000000016TTBVIDTNH", "status": "processed" }
+        verify_signature:
+          type: string
+          minLength: 1
+          maxLength: 5
+          description: |
+            Kết quả verify chữ ký: `"true"` nếu hợp lệ, `"false"` nếu không hợp lệ.
+          enum: ["true", "false"]
+          example: "true"
+
+    # ─────────────────────────────────────────────
+    # ERROR RESPONSE
+    # ─────────────────────────────────────────────
+
+    ErrorResponse:
+      type: object
+      description: |
+        Response lỗi nghiệp vụ. **API luôn trả về HTTP 200** kể cả khi có lỗi.
+        Kiểm tra `statusCode` để phân biệt thành công / lỗi.
+
+        | statusCode | message | Mô tả |
+        |---|---|---|
+        | `00` | `SUCCESS` | Thành công |
+        | `01` | `Client ID not found` | `client-id` header không tồn tại trong hệ thống |
+        | `02` | `Account not found` | `merchant.account_no` không tìm thấy |
+        | `03` | `Order ID not found` | `invoice_code` không tồn tại (dùng cho update/query) |
+        | `04` | `Type not found` | `payment_method_type` không phải `"viet_qr"` |
+        | `05` | `Client ID invalid` | `client-id` header không khớp với `merchant.client_id` trong body |
+        | `06` | `System error` | Lỗi nội bộ PVcomBank — thử lại sau |
+        | `07` | `VA Invalid` | `alias` không hợp lệ hoặc không khớp với hóa đơn |
+        | `08` | `Amount Invalid` | `amount` chứa ký tự không hợp lệ |
+        | `09` | `Invoice invalid` | Hóa đơn không tồn tại hoặc không ở trạng thái `PENDING` |
+        | `30` | `MESSAGE_FORMAT_ERROR` | Request body sai schema (thiếu trường, sai kiểu dữ liệu) |
+      properties:
+        statusCode:
+          type: string
+          example: "05"
+        message:
+          type: string
+          example: "Client ID invalid"
+        data:
+          type: object
+          nullable: true
+          description: Thường là `{}` khi có lỗi.
+          example: {}
+
+
+  # ─────────────────────────────────────────────
+  # REUSABLE EXAMPLES
+  # ─────────────────────────────────────────────
+  examples:
+    TokenResponseSuccess:
+      summary: Lấy token thành công
+      value:
+        access_token: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+        token_type: "Bearer"
+        expires_in: 3600
+        scope: "openid"
+
+    InvoiceRequestBasic:
+      summary: Tạo hóa đơn cơ bản (không có thời hạn)
+      value:
+        amount: "150000"
+        currency: "VND"
+        invoice_code: "INV2024050001"
+        description: "Thanh toán đơn hàng #ORD-2024-001"
+        payment_method: "bank_transfer"
+        payment_method_type: "viet_qr"
+        merchant:
+          client_id: "MERCHANT_001"
+          name: "Công ty TNHH ABC"
+          account_no: "0123456789012"
+        customer: {}
+
+    InvoiceRequestWithExpiry:
+      summary: Tạo hóa đơn có thời hạn 300 giây (5 phút)
+      value:
+        amount: "500000"
+        currency: "VND"
+        invoice_code: "INV2024050002"
+        description: "Thanh toán dịch vụ tháng 5/2024"
+        payment_method: "bank_transfer"
+        payment_method_type: "viet_qr"
+        invoice_expiry_seconds: 300
+        merchant:
+          client_id: "MERCHANT_001"
+          name: "Công ty TNHH ABC"
+          account_no: "0123456789012"
+        customer: {}
+
+    InvoiceRequestWithCustomer:
+      summary: Tạo hóa đơn kèm thông tin khách hàng
+      value:
+        amount: "200000"
+        currency: "VND"
+        invoice_code: "INV2024050003"
+        description: "Thanh toán hóa đơn điện tháng 5"
+        payment_method: "bank_transfer"
+        payment_method_type: "viet_qr"
+        invoice_expiry_seconds: 600
+        merchant:
+          client_id: "MERCHANT_001"
+          name: "Công ty TNHH ABC"
+          account_no: "0123456789012"
+        customer:
+          name: "Nguyen Van A"
+          email: "nguyenvana@example.com"
+
+    InvoiceResponseSuccess:
+      summary: Tạo hóa đơn thành công — lưu lại alias để dùng khi hủy
+      value:
+        statusCode: "00"
+        message: "SUCCESS"
+        data:
+          invoice_code: "INV2024050001"
+          status: "PENDING"
+          amount: "150000"
+          currency: "VND"
+          alias: "99901234567890123"
+          invoice_expiry_time: null
+          payment_method: "bank_transfer"
+          next_action:
+            type: "qr_code"
+            qr_code: "00020101021238570010A000000727012700069704220113099012345678900208QRIBFTTA53037045802VN5915Cong ty TNHH ABC6005Hanoi62200816INV20240500016304ABCD"
+
+    InvoiceResponseWithExpiry:
+      summary: Tạo hóa đơn có thời hạn thành công
+      value:
+        statusCode: "00"
+        message: "SUCCESS"
+        data:
+          invoice_code: "INV2024050002"
+          status: "PENDING"
+          amount: "500000"
+          currency: "VND"
+          alias: "99901234567890124"
+          invoice_expiry_time: "2024-05-01T10:05:00+07:00"
+          payment_method: "bank_transfer"
+          next_action:
+            type: "qr_code"
+            qr_code: "00020101021238570010A000000727012700069704220113099012345678900208QRIBFTTA53037045802VN5915Cong ty TNHH ABC6005Hanoi62200816INV20240500026304EFGH"
+
+    UpdateInvoiceRequestForceExpire:
+      summary: Hủy hóa đơn ngay lập tức
+      value:
+        alias: "99901234567890123"
+        invoice_code: "INV2024050001"
+        force_expire_now: true
+        merchant:
+          client_id: "MERCHANT_001"
+          account_no: "0123456789012"
+
+    UpdateInvoiceResponseSuccess:
+      summary: Hủy hóa đơn thành công — status chuyển sang EXPIRED
+      value:
+        statusCode: "00"
+        message: "SUCCESS"
+        data:
+          invoice_code: "INV2024050001"
+          status: "EXPIRED"
+          alias: "99901234567890123"
+
+    TransactionQueryRequestExample:
+      summary: Truy vấn giao dịch theo mã hóa đơn
+      value:
+        account: 123388
+        orderId: "HD000000016TTBVIDTNH"
+        clientId: "a67246e5b10fcac6851299ee51602818"
+
+    TransactionQueryResponseSuccess:
+      summary: Truy vấn giao dịch thành công
+      value:
+        statusCode: "00"
+        message: "SUCCESS"
+        data:
+          account: "123388"
+          currency: "VND"
+          amount: "150000"
+          tranDate: "2024-05-01 10:03:45.123456"
+          tranId: "FT24120112345678"
+          description: "HD000000016TTBVIDTNH"
+
+    IpnPayloadExample:
+      summary: PVcomBank gọi IPN khi thanh toán thành công
+      value:
+        data:
+          account: "103000817212"
+          va: "VA72364734"
+          currency: "VND"
+          amount: "18000"
+          tranDate: "2024-11-03 11:24:24.997757"
+          tranId: "FT21242FK3NK"
+          description: "HD123456789TTBV"
+        signature: "base64encodedSHA512WithRSASignature..."
+
+    IpnResponseExample:
+      summary: ĐVCNTT trả về sau khi verify IPN thành công
+      value:
+        data:
+          orderId: "HD123456789TTBV"
+          status: "processed"
+        verify_signature: "true"
+
+    ErrorClientIdNotFound:
+      summary: "Lỗi 01 — client-id không tồn tại trong hệ thống"
+      value:
+        statusCode: "01"
+        message: "Client ID not found"
+        data: {}
+
+    ErrorClientIdInvalid:
+      summary: "Lỗi 05 — client-id header không khớp với merchant.client_id trong body"
+      value:
+        statusCode: "05"
+        message: "Client ID invalid"
+        data: {}
+
+    ErrorAccountNotFound:
+      summary: "Lỗi 02 — merchant.account_no không tìm thấy"
+      value:
+        statusCode: "02"
+        message: "Account not found"
+        data: {}
+
+    ErrorTypeNotFound:
+      summary: "Lỗi 04 — payment_method_type không phải viet_qr"
+      value:
+        statusCode: "04"
+        message: "Type not found"
+        data: {}
+
+    ErrorAmountInvalid:
+      summary: "Lỗi 08 — amount chứa ký tự không hợp lệ (dấu phẩy, chấm, chữ cái)"
+      value:
+        statusCode: "08"
+        message: "Amount Invalid"
+        data: {}
+
+    ErrorMessageFormat:
+      summary: "Lỗi 30 — request body sai schema hoặc invoice_code trùng lặp"
+      value:
+        statusCode: "30"
+        message: "MESSAGE_FORMAT_ERROR"
+        data: {}
+
+    ErrorSystemError:
+      summary: "Lỗi 06 — lỗi nội bộ hệ thống PVcomBank, thử lại sau"
+      value:
+        statusCode: "06"
+        message: "System error"
+        data: {}
+
+    ErrorOrderIdNotFound:
+      summary: "Lỗi 03 — invoice_code không tồn tại trong hệ thống"
+      value:
+        statusCode: "03"
+        message: "Order ID not found"
+        data: {}
+
+    ErrorInvoiceInvalid:
+      summary: "Lỗi 09 — hóa đơn không tồn tại hoặc không ở trạng thái PENDING"
+      value:
+        statusCode: "09"
+        message: "Invoice invalid"
+        data: {}
+
+    ErrorVAInvalid:
+      summary: "Lỗi 07 — alias (Virtual Account) không hợp lệ hoặc không khớp với hóa đơn"
+      value:
+        statusCode: "07"
+        message: "VA Invalid"
+        data: {}
+
+
+paths:
+
+  # ─────────────────────────────────────────────
+  # BƯỚC 1: Lấy Access Token
+  # ─────────────────────────────────────────────
+  /idp/oauth2/token:
+    post:
+      tags:
+        - "Bước 1 — Xác thực"
+      summary: Lấy Access Token
+      operationId: getToken
+      description: |
+        Lấy JWT Access Token bằng OAuth2 Client Credentials flow.
+        Token này **bắt buộc** để gọi tất cả Invoice API.
+
+        **Content-Type**: `application/x-www-form-urlencoded` (không phải JSON)
+
+        **Quản lý token**:
+        - Token hết hạn sau `expires_in` giây (thường **3600s = 1 giờ**)
+        - **Nên cache token** và tái sử dụng — không gọi lại mỗi request
+        - Làm mới token khi còn ~5 phút trước khi hết hạn
+        - Khi token hết hạn, API trả về HTTP 401 — gọi lại endpoint này
+
+        **Bảo mật**:
+        - Không nhúng `client_secret` vào client-side code
+        - Không commit `client_secret` lên source control
+        - Lưu trữ trong environment variable hoặc secret manager
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/TokenRequest"
+            example:
+              client_id: "a67246e5b10fcac6851299ee51602818"
+              client_secret: "59a08617d57094a7474ed90a1fb5658f"
+              scope: "openid"
+              grant_type: "client_credentials"
+      responses:
+        "200":
+          description: Lấy token thành công.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+              examples:
+                success:
+                  $ref: "#/components/examples/TokenResponseSuccess"
+        "401":
+          description: |
+            Xác thực thất bại — `client_id` hoặc `client_secret` không hợp lệ.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "invalid_client"
+                  error_description:
+                    type: string
+                    example: "Client authentication failed"
+
+  # ─────────────────────────────────────────────
+  # BƯỚC 2: Tạo hóa đơn thanh toán
+  # ─────────────────────────────────────────────
+  /external-public/external-public/bill/api/v1/invoices:
+    post:
+      tags:
+        - "Bước 2 — Quản lý hóa đơn"
+      summary: Tạo hóa đơn thanh toán VietQR
+      operationId: createInvoice
+      description: |
+        Tạo hóa đơn thanh toán mới và nhận về mã QR VietQR để hiển thị cho khách hàng quét.
+
+        **Headers bắt buộc**:
+        - `Authorization: Bearer <access_token>` — lấy từ bước 1
+        - `client-id: <your_client_id>` — phải khớp với `merchant.client_id` trong body
+
+        **Trạng thái hóa đơn sau khi tạo**: `PENDING`
+
+        **Sau khi nhận response thành công**:
+        1. Lấy `data.next_action.qr_code` → render thành ảnh QR → hiển thị cho khách hàng
+        2. Lưu lại `data.alias` → dùng khi cần hủy hóa đơn
+        3. Chờ IPN callback từ PVcomBank khi khách hàng thanh toán
+
+        **Lưu ý quan trọng**:
+        - `invoice_code` phải **duy nhất toàn hệ thống** — nếu trùng → lỗi `30`
+        - `amount` chỉ chứa chữ số nguyên dương — ví dụ `"150000"`, không phải `"150,000"`
+        - `payment_method_type` chỉ chấp nhận `"viet_qr"` — nếu sai → lỗi `04`
+        - API luôn trả về **HTTP 200** — kiểm tra `statusCode` trong body để xác định kết quả
+
+        **Mã lỗi có thể gặp**:
+        | statusCode | Nguyên nhân | Hướng xử lý |
+        |---|---|---|
+        | `01` | `client-id` header không tồn tại | Kiểm tra lại `client-id` được cấp |
+        | `02` | `merchant.account_no` không tìm thấy | Kiểm tra số tài khoản; liên hệ PVcomBank |
+        | `04` | `payment_method_type` không phải `"viet_qr"` | Chỉ dùng `"viet_qr"` |
+        | `05` | `client-id` header ≠ `merchant.client_id` trong body | Đảm bảo hai giá trị giống nhau |
+        | `08` | `amount` chứa ký tự không hợp lệ | Chỉ dùng chữ số nguyên dương |
+        | `30` | `invoice_code` trùng lặp hoặc sai schema | Dùng `invoice_code` mới; kiểm tra cấu trúc request |
+        | `06` | Lỗi hệ thống PVcomBank | Thử lại sau vài giây |
+      security:
+        - BearerAuth: []
+          ClientIdAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InvoiceRequest"
+            examples:
+              basic:
+                $ref: "#/components/examples/InvoiceRequestBasic"
+              withExpiry:
+                $ref: "#/components/examples/InvoiceRequestWithExpiry"
+              withCustomer:
+                $ref: "#/components/examples/InvoiceRequestWithCustomer"
+      responses:
+        "200":
+          description: |
+            Kết quả xử lý. HTTP 200 trả về cho cả thành công lẫn lỗi nghiệp vụ.
+            Kiểm tra `statusCode` trong body để xác định kết quả thực sự.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/InvoiceResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                success:
+                  $ref: "#/components/examples/InvoiceResponseSuccess"
+                successWithExpiry:
+                  $ref: "#/components/examples/InvoiceResponseWithExpiry"
+                error01:
+                  $ref: "#/components/examples/ErrorClientIdNotFound"
+                error02:
+                  $ref: "#/components/examples/ErrorAccountNotFound"
+                error04:
+                  $ref: "#/components/examples/ErrorTypeNotFound"
+                error05:
+                  $ref: "#/components/examples/ErrorClientIdInvalid"
+                error06:
+                  $ref: "#/components/examples/ErrorSystemError"
+                error08:
+                  $ref: "#/components/examples/ErrorAmountInvalid"
+                error30:
+                  $ref: "#/components/examples/ErrorMessageFormat"
+
+  # ─────────────────────────────────────────────
+  # BƯỚC 2b: Hủy hóa đơn (tùy chọn)
+  # ─────────────────────────────────────────────
+  /external-public/external-public/bill/api/v1/invoices/update:
+    post:
+      tags:
+        - "Bước 2 — Quản lý hóa đơn"
+      summary: Hủy hóa đơn (Force Expire)
+      operationId: updateInvoice
+      description: |
+        Hủy hóa đơn ngay lập tức bằng cách đặt `force_expire_now: true`.
+        Hóa đơn chuyển sang trạng thái `EXPIRED` và khách hàng không thể thanh toán nữa.
+
+        **Headers bắt buộc**:
+        - `Authorization: Bearer <access_token>`
+        - `client-id: <your_client_id>`
+
+        **Điều kiện tiên quyết**:
+        - Hóa đơn phải đang ở trạng thái `PENDING`
+        - Hóa đơn đã `PAID`, `EXPIRED`, `CANCELLED`, `FAILED` → lỗi `statusCode: "09"`
+
+        **Use case**:
+        - Khách hàng không muốn thanh toán, yêu cầu hủy đơn
+        - Cần tạo lại hóa đơn với số tiền khác
+        - Hóa đơn tạo nhầm, cần hủy trước khi khách hàng quét QR
+        - Dọn dẹp hóa đơn chưa thanh toán khi hết phiên giao dịch
+
+        **Mã lỗi có thể gặp**:
+        | statusCode | Nguyên nhân | Hướng xử lý |
+        |---|---|---|
+        | `01` | `client-id` header không tồn tại | Kiểm tra lại `client-id` |
+        | `05` | `client-id` header ≠ `merchant.client_id` trong body | Đảm bảo hai giá trị giống nhau |
+        | `07` | `alias` không hợp lệ hoặc không khớp với hóa đơn | Kiểm tra `alias` từ response tạo hóa đơn |
+        | `09` | Hóa đơn không ở trạng thái `PENDING` | Kiểm tra trạng thái hóa đơn trước khi hủy |
+        | `30` | Request body sai schema | Kiểm tra lại cấu trúc request |
+        | `06` | Lỗi hệ thống PVcomBank | Thử lại sau vài giây |
+      security:
+        - BearerAuth: []
+          ClientIdAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateInvoiceRequest"
+            examples:
+              forceExpire:
+                $ref: "#/components/examples/UpdateInvoiceRequestForceExpire"
+      responses:
+        "200":
+          description: |
+            Kết quả xử lý. HTTP 200 trả về cho cả thành công lẫn lỗi nghiệp vụ.
+            Kiểm tra `statusCode` trong body để xác định kết quả thực sự.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/UpdateInvoiceResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                success:
+                  $ref: "#/components/examples/UpdateInvoiceResponseSuccess"
+                error01:
+                  $ref: "#/components/examples/ErrorClientIdNotFound"
+                error05:
+                  $ref: "#/components/examples/ErrorClientIdInvalid"
+                error07:
+                  $ref: "#/components/examples/ErrorVAInvalid"
+                error09:
+                  $ref: "#/components/examples/ErrorInvoiceInvalid"
+                error30:
+                  $ref: "#/components/examples/ErrorMessageFormat"
+                error06:
+                  $ref: "#/components/examples/ErrorSystemError"
+
+  # ─────────────────────────────────────────────
+  # BƯỚC 6 (tùy chọn): Truy vấn giao dịch
+  # ─────────────────────────────────────────────
+  /external-public/external-public/notifications/api/v1/transactions:
+    post:
+      tags:
+        - "Bước 6 — Truy vấn giao dịch (tùy chọn)"
+      summary: Truy vấn giao dịch theo mã hóa đơn
+      operationId: queryTransaction
+      description: |
+        Chủ động tra cứu kết quả giao dịch thanh toán theo mã hóa đơn (`orderId`).
+
+        **Khi nào dùng**:
+        - Chưa nhận được IPN callback sau một khoảng thời gian
+        - Cần đối soát giao dịch
+        - Kiểm tra trạng thái thanh toán theo yêu cầu của khách hàng
+
+        **Header bắt buộc**:
+        - `Authorization: Bearer <access_token>`
+
+        **Lưu ý**:
+        - `account` là số nguyên (integer), không phải string
+        - `orderId` phải là mã hóa đơn đầy đủ bao gồm format (ví dụ: `HD000000016TTBVIDTNH`)
+        - API trả về HTTP 200 cho cả thành công lẫn lỗi — kiểm tra `statusCode`
+
+        **Mã lỗi có thể gặp**:
+        | statusCode | Nguyên nhân | Hướng xử lý |
+        |---|---|---|
+        | `01` | `clientId` không tồn tại | Kiểm tra lại `clientId` |
+        | `02` | `account` không tìm thấy | Kiểm tra số tài khoản |
+        | `03` | `orderId` không tồn tại | Kiểm tra lại mã hóa đơn |
+        | `05` | `clientId` không hợp lệ | Kiểm tra lại `clientId` |
+        | `09` | Hóa đơn không hợp lệ | Kiểm tra trạng thái hóa đơn |
+        | `30` | Request body sai schema | Kiểm tra lại cấu trúc request |
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionQueryRequest"
+            examples:
+              query:
+                $ref: "#/components/examples/TransactionQueryRequestExample"
+      responses:
+        "200":
+          description: |
+            Kết quả truy vấn. HTTP 200 trả về cho cả thành công lẫn lỗi nghiệp vụ.
+            Kiểm tra `statusCode` trong body để xác định kết quả thực sự.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionQueryResponse"
+                  - $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                success:
+                  $ref: "#/components/examples/TransactionQueryResponseSuccess"
+                error01:
+                  $ref: "#/components/examples/ErrorClientIdNotFound"
+                error02:
+                  $ref: "#/components/examples/ErrorAccountNotFound"
+                error03:
+                  $ref: "#/components/examples/ErrorOrderIdNotFound"
+                error05:
+                  $ref: "#/components/examples/ErrorClientIdInvalid"
+                error09:
+                  $ref: "#/components/examples/ErrorInvoiceInvalid"
+                error30:
+                  $ref: "#/components/examples/ErrorMessageFormat"
+
+  # ─────────────────────────────────────────────
+  # BƯỚC 5: IPN Callback (ĐVCNTT triển khai)
+  # ─────────────────────────────────────────────
+  /ipn:
+    post:
+      tags:
+        - "Bước 5 — IPN Callback (ĐVCNTT triển khai)"
+      summary: Nhận IPN từ PVcomBank khi thanh toán thành công
+      operationId: receiveIpn
+      description: |
+        **Endpoint này do ĐVCNTT tự triển khai** trên hệ thống của mình.
+        PVcomBank POST đến URL IPN của ĐVCNTT khi có biến động số dư (thanh toán thành công).
+
+        **Chiều gọi**: PVcomBank → ĐVCNTT (server-to-server)
+
+        **URL ví dụ**: `https://your-domain.com/ipn`
+
+        ---
+
+        ### Quy trình xử lý IPN phía ĐVCNTT
+
+        **Bước 1 — Tạo chuỗi ký để verify**:
+        ```
+        msg = tranId + account + currency + amount + tranDate + description
+        ```
+        Ghép trực tiếp, không có dấu phân cách. Ví dụ:
+        ```
+        msg = "FT21242FK3NK103000817212VND18000 2024-11-03 11:24:24.997757HD123456789TTBV"
+        ```
+
+        **Bước 2 — Verify chữ ký** bằng Public Key PVcomBank cấp (SHA512WithRSA):
+        ```java
+        // Java
+        Signature sig = Signature.getInstance("SHA512withRSA");
+        sig.initVerify(pvcomBankPublicKey);
+        sig.update(msg.getBytes("UTF-8"));
+        boolean isValid = sig.verify(Base64.getDecoder().decode(signature));
+        ```
+        ```python
+        # Python
+        public_key.verify(base64.b64decode(signature), msg.encode('utf-8'),
+                          padding.PKCS1v15(), hashes.SHA512())
+        ```
+
+        **Bước 3 — Xử lý nghiệp vụ** (chỉ khi verify thành công):
+        - Dùng `data.description` (mã hóa đơn) để map về đơn hàng
+        - Lưu `data.tranId` để tránh xử lý trùng lặp khi PVcomBank retry
+        - Cập nhật trạng thái đơn hàng thành "đã thanh toán"
+
+        **Bước 4 — Trả về response**:
+        - `verify_signature: "true"` nếu chữ ký hợp lệ
+        - `verify_signature: "false"` nếu chữ ký không hợp lệ
+
+        ---
+
+        **Lưu ý**:
+        - Giá trị các tham số không được chứa ký tự tiếng Việt có dấu hoặc ký tự đặc biệt (`= | & ?`)
+        - PVcomBank cung cấp Public Key và code mẫu verify cho các ngôn ngữ phổ biến
+        - PVcomBank lưu log toàn bộ response ĐVCNTT trả về
+        - Xử lý idempotency: lưu `tranId` đã xử lý để tránh xử lý trùng khi PVcomBank retry
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IpnPayload"
+            examples:
+              ipnPayment:
+                $ref: "#/components/examples/IpnPayloadExample"
+      responses:
+        "200":
+          description: |
+            ĐVCNTT trả về kết quả xử lý IPN.
+            PVcomBank lưu log toàn bộ response này.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IpnResponse"
+              examples:
+                success:
+                  $ref: "#/components/examples/IpnResponseExample"
+
+tags:
+  - name: "Bước 1 — Xác thực"
+    description: |
+      Lấy Access Token OAuth2. Thực hiện trước tất cả các bước khác.
+      Token có hiệu lực 1 giờ — cache và tái sử dụng.
+  - name: "Bước 2 — Quản lý hóa đơn"
+    description: |
+      Tạo hóa đơn VietQR và hủy hóa đơn khi cần.
+      Yêu cầu Bearer Token (bước 1) và header client-id.
+  - name: "Bước 5 — IPN Callback (ĐVCNTT triển khai)"
+    description: |
+      ĐVCNTT tự triển khai endpoint này để nhận thông báo thanh toán từ PVcomBank.
+      Phải verify chữ ký SHA512WithRSA trước khi xử lý nghiệp vụ.
+  - name: "Bước 6 — Truy vấn giao dịch (tùy chọn)"
+    description: |
+      Chủ động tra cứu kết quả giao dịch theo mã hóa đơn.
+      Dùng khi chưa nhận được IPN hoặc cần đối soát.
